@@ -1,0 +1,10 @@
+.favorites{max-width:900px;margin:1.5rem auto;padding:0 1rem}
+.fav-grid{
+  list-style:none;display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  padding:0;margin:1rem 0;
+}
+.fav-card{
+  background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:.9rem;display:flex;justify-content:space-between;align-items:center;
+}
+.fav-link{color:var(--text);text-decoration:none;font-weight:600}

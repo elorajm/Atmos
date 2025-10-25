@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Atmos – Weather Tracker</title>
+  <link rel="stylesheet" href="css/base.css"/>
+  <link rel="stylesheet" href="css/home.css"/>
+</head>
+<body>
+  <header>
+    <nav class="navbar" aria-label="Primary">
+      <a class="logo" href="index.html">Atmos</a>
+      <ul class="nav-links">
+        <li><a class="active" href="index.html">Home</a></li>
+        <li><a href="favorites.html">Favorites</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+
+      <!-- Drop-down (unit selector) — later persisted in localStorage -->
+      <label class="unit-label" for="unit-select">Units</label>
+      <select id="unit-select" class="unit-select" aria-label="Select temperature unit">
+        <option value="imperial">°F</option>
+        <option value="metric">°C</option>
+      </select>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <h1>Check the Weather</h1>
+      <p class="sub">Fast, clear, and friendly forecasts.</p>
+    </section>
+
+    <section class="search-section" aria-labelledby="search-heading">
+      <h2 id="search-heading">Search by City</h2>
+
+      <!-- Detailed validated form (static for Unit 3) -->
+      <form id="weather-form" novalidate>
+        <div class="form-row">
+          <label for="city">City Name <span aria-hidden="true">*</span></label>
+          <input id="city" name="city" type="text" required
+                 placeholder="e.g., Rexburg"
+                 aria-describedby="city-help city-error" />
+          <small id="city-help">Enter a valid city name (letters, spaces, hyphens).</small>
+          <span id="city-error" class="error-message" aria-live="assertive"></span>
+        </div>
+
+        <button type="submit" class="btn">Search</button>
+      </form>
+      <!-- NOTE: In Unit 4+, JS will validate and fetch. -->
+    </section>
+
+    <section class="weather-results" aria-labelledby="results-heading">
+      <h2 id="results-heading" class="sr-only">Results</h2>
+
+      <!-- STATIC CARD (placeholder). Later: replace via ui.js from API data -->
+      <article class="weather-card sunny" tabindex="0">
+        <header class="card-head">
+          <h3 class="city-name">
+            <a href="index.html?city=Rexburg" class="card-link">
+              Rexburg, ID
+            </a>
+          </h3>
+          <p class="timestamp">Updated: 2:15 PM</p>
+        </header>
+
+        <div class="temp-row">
+          <p class="temp">72°</p>
+          <p class="desc">Sunny with light breeze</p>
+        </div>
+
+        <ul class="meta">
+          <li><span aria-label="Humidity">Humidity:</span> 20%</li>
+          <li><span aria-label="Wind">Wind:</span> 5 mph</li>
+        </ul>
+
+        <div class="card-actions">
+          <button class="btn save-btn" type="button">Save City</button>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      © 2025 Atmos | Built by Elora Mathias &amp; Bryan Stauch • United States
+    </p>
+  </footer>
+
+  <!-- NOTE: Scripts are placeholders for later units -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

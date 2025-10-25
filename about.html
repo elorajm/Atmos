@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About – Atmos</title>
+  <link rel="stylesheet" href="css/base.css"/>
+</head>
+<body>
+  <header>
+    <nav class="navbar" aria-label="Primary">
+      <a class="logo" href="index.html">Atmos</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="favorites.html">Favorites</a></li>
+        <li><a class="active" href="about.html">About</a></li>
+      </ul>
+
+      <label class="unit-label" for="unit-select">Units</label>
+      <select id="unit-select" class="unit-select" aria-label="Select temperature unit">
+        <option value="imperial">°F</option>
+        <option value="metric">°C</option>
+      </select>
+    </nav>
+  </header>
+
+  <main class="page">
+    <h1>About Atmos</h1>
+    <p>
+      Atmos is a simple, friendly weather tracker that will fetch real forecasts
+      and conditions in a later unit. This static prototype demonstrates the
+      layout, colors, and responsive behavior for the final app.
+    </p>
+
+    <h2>Accessibility</h2>
+    <ul>
+      <li>Form labels and clear instructions</li>
+      <li>High contrast and focus-visible states</li>
+      <li>Semantic HTML for assistive tech</li>
+    </ul>
+  </main>
+
+  <footer>
+    <p>© 2025 Atmos</p>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
