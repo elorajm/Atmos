@@ -1,5 +1,7 @@
+/*base.css*/
 @import url('variables.css');
 @import url('global.css');
 @import url('header.css');
 @import url('footer.css');
 @import url('animations.css');
+@import url('favorites.css')

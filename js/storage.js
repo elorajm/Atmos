@@ -17,3 +17,12 @@ export function getFavorites(){
 export function saveFavorites(list){
   try { localStorage.setItem(FAV_KEY, JSON.stringify(list)); } catch(_) {}
 }
+
+export function saveCityTile(){
+console.log("Save City Tile button clicked");
+}
+
+export function removeCityTile(){
+console.log("Remove City Tile button clicked");
+}
+

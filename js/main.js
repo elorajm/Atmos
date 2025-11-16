@@ -8,8 +8,40 @@
 // - Support URL parameter ?city=NAME to auto-load a city on page load.
 
 import { getJSONWeather } from './api.js';
-import { saveUnit, loadUnit, getFavorites } from './storage.js';
+import { saveUnit, loadUnit, getFavorites, saveCityTile,removeCityTile } from './storage.js';
 import { renderWeatherCard, clearResults } from './ui.js';
 
 // NOTE: Code will be added in Unit 4. Keeping imports now documents module plan.
 console.info('Atmos scaffold loaded (Unit 3 static prototype).');
+
+//Event Listeners 
+const saveBtn = document.querySelector(".save-btn");
+const removeBtn = document.querySelector(".remove-btn");
+const favorites = getFavorites();
+const cityEl = document.querySelector(".weather-card .city-name");
+const cityName = cityEl ? cityEl.textContent.trim : null;
+
+if (favorites.includes(cityName)) {
+    saveBtn.style.display = "none";
+    removeBtn.style.display = "inline-block";
+} else {
+    removeBtn.style.display = "none";
+    saveBtn.style.display = "inline-block";
+}
+    saveBtn.addEventListener("click", () => {
+        saveCityTile();
+        saveBtn.style.display = "none";
+        removeBtn.style.display = "block";
+    });
+
+        //removing
+        removeBtn.addEventListener("click", () => {
+            removeCityTile();
+            removeBtn.style.display = "none";
+            saveBtn.style.display = "block";
+    });
+
+    
+    
+ 
+

@@ -1,3 +1,4 @@
+/*favorites.css*/
 .favorites{max-width:900px;margin:1.5rem auto;padding:0 1rem}
 .fav-grid{
   list-style:none;display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
@@ -8,3 +9,30 @@
   padding:.9rem;display:flex;justify-content:space-between;align-items:center;
 }
 .fav-link{color:var(--text);text-decoration:none;font-weight:600}
+
+.weather-card .card-actions {
+  display: flex;
+  justify-content: center; /* This centers the button on the card */;
+}
+
+.weather-card .card-actions .btn {
+  flex: 0 0 auto;
+  width: auto;
+  text-align: center;
+
+}
+
+.weather-card .meta {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;   /* <-- adds space below the meta row */
+  display: flex;
+  justify-content: center;   /* center horizontally */
+  gap: 1rem;                 /* space between items */
+}
+
+.weather-card .meta li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
