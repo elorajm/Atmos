@@ -1,0 +1,58 @@
+/*citiesAPI.json*/
+{
+  "description": "Test Cities API file Base Test List, used for fetching city data",
+  "cities": [
+    {
+      "city_name": "New York",
+      "state": "NY",
+      "country": "US",
+      "temperature": 68,
+      "humidity": 100,
+      "wind_speed": 25,
+      "weather_condition": "Thunderstorms",
+      "last_updated": "2023-10-01T12:00:00Z"
+    },
+    {
+      "city_name": "Los Angeles",
+      "state": "CA",
+      "country": "US",
+      "temperature": 85,
+      "humidity": 60,
+      "wind_speed": 10,
+      "weather_condition": "Sunny",
+      "last_updated": "2023-10-01T12:00:00Z"
+    },
+    {
+      "city_name": "Chicago",
+      "state": "IL",
+      "country": "US",
+      "temperature": 75,
+      "humidity": 80,
+      "wind_speed": 15,
+      "weather_condition": "Cloudy",
+      "last_updated": "2023-10-01T12:00:00Z"
+    },
+    {
+      "city_name": "Miami",
+      "state": "FL",
+      "country": "US",
+      "temperature": 90,
+      "humidity": 70,
+      "wind_speed": 5,
+      "weather_condition": "Partly Cloudy",
+      "last_updated": "2023-10-01T12:00:00Z"
+    },
+    {
+      "city_name": "Midland",
+      "state": "TX",
+      "country": "US",
+      "temperature": 115,
+      "humidity": 15,
+      "wind_speed": 2,
+      "weather_condition": "Hot and dry",
+      "last_updated": "2023-10-01T12:00:00Z"
+    }
+  ]
+}
+
+

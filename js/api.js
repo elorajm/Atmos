@@ -11,5 +11,7 @@ export async function getJSONWeather() {
     wind: { speed: 5 },
     weather: [{ description: 'Sunny with light breeze' }],
     dt: Date.now()
+
+    
   };
 }
