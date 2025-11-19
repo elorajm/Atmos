@@ -1,17 +1,30 @@
 // api.js
-// TODO (Unit 4): Implement OpenWeatherMap fetch here.
-// export async function getJSONWeather(city, units){ ... }
+// Uses WeatherAPI.com (same API as your ZipTemp app) to get current weather by city.
 
-export async function getJSONWeather() {
-  // Stub for Unit 3: return static shape example for dev
-  return {
-    name: 'Rexburg',
-    sys: { country: 'US' },
-    main: { temp: 72, humidity: 20 },
-    wind: { speed: 5 },
-    weather: [{ description: 'Sunny with light breeze' }],
-    dt: Date.now()
+const API_KEY = 'a52499ff54b643158ec24459241607'; // From ZipTemp
 
-    
-  };
+/**
+ * Fetch current weather for a city using WeatherAPI.com
+ * @param {string} city - City name, e.g. "Rexburg"
+ * @returns {Promise<object>} Weather API JSON response
+ */
+export async function getJSONWeather(city) {
+  const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${encodeURIComponent(
+    city
+  )}`;
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error('City not found. Please check the spelling.');
+    } else if (response.status === 500) {
+      throw new Error('Server error. Please try again later.');
+    } else {
+      throw new Error('Network response was not ok.');
+    }
+  }
+
+  const data = await response.json();
+  return data;
 }

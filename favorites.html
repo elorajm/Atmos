@@ -4,17 +4,21 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Favorites – Atmos</title>
+
+  <!-- Shared styles -->
   <link rel="stylesheet" href="css/base.css"/>
+  <!-- Favorites page layout -->
   <link rel="stylesheet" href="css/favorites.css"/>
 </head>
 <body>
   <header>
     <nav class="navbar" aria-label="Primary">
       <a class="logo" href="index.html">Atmos</a>
+
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a class="active" href="favorites.html">Favorites</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="about.html">Contact</a></li>
       </ul>
 
       <label class="unit-label" for="unit-select">Units</label>
@@ -28,20 +32,10 @@
   <main>
     <section class="favorites">
       <h1>Your Favorite Cities</h1>
-      <!-- STATIC placeholders; later filled from localStorage via storage.js -->
+
+      <!-- This list is built dynamically from localStorage by main.js -->
       <ul class="fav-grid">
-        <li class="fav-card">
-          <a class="fav-link" href="index.html?city=Rexburg">
-            Rexburg, ID • 72°
-          </a>
-          <button class="btn secondary">Remove</button>
-        </li>
-        <li class="fav-card">
-          <a class="fav-link" href="index.html?city=Boise">
-            Boise, ID • 77°
-          </a>
-          <button class="btn secondary">Remove</button>
-        </li>
+        <!-- JS will populate with <li class="fav-card"> items -->
       </ul>
     </section>
   </main>
@@ -50,6 +44,7 @@
     <p>© 2025 Atmos</p>
   </footer>
 
+  <!-- Use same JS entry. It detects if it's on favorites page via .fav-grid. -->
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
