@@ -1,5 +1,5 @@
 /* global.css
-   Resets, base typography, and utility classes.
+   Resets, base typography, and general layout.
 */
 
 * {
@@ -12,11 +12,13 @@ body {
   padding: 0;
 }
 
+/* Body now has a soft animated gradient so it’s not just white */
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
-  background: var(--bg);
+  background: radial-gradient(circle at top, #dbeafe 0, #eff6ff 40%, #f9fafb 100%);
   color: var(--text);
   line-height: 1.6;
+  min-height: 100vh;
 }
 
 /* General headings */
@@ -31,7 +33,7 @@ main {
   min-height: 60vh;
 }
 
-/* Generic page container */
+/* Generic page container (used on some pages) */
 .page {
   padding: 2rem 1rem;
   max-width: 900px;
@@ -97,15 +99,14 @@ select:focus {
   font-size: 0.9rem;
 }
 
-/* Hero section used on home page */
+/* Hero section base (more details in home.css) */
 .hero {
   padding: 2.25rem 1rem;
   text-align: center;
-  background: linear-gradient(135deg, var(--accent), var(--secondary));
   border-bottom: 1px solid #e5e7eb;
 }
 
-/* Screen-reader only text (for headings that are not visually shown) */
+/* Screen-reader only text (for invisible headings) */
 .sr-only {
   position: absolute;
   width: 1px;

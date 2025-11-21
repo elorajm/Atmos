@@ -2,6 +2,14 @@
    Styles for the top navigation bar.
 */
 
+/* Make the whole header bar stick to the top as you scroll */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+/* The actual nav bar content */
 .navbar {
   display: flex;
   align-items: center;
@@ -12,6 +20,7 @@
   color: #fff;
 }
 
+/* “Atmos” logo link */
 .logo {
   font-weight: 800;
   color: #fff;
@@ -19,6 +28,7 @@
   font-size: 1.1rem;
 }
 
+/* Main nav links */
 .nav-links {
   display: flex;
   gap: 1rem;
@@ -34,11 +44,13 @@
   padding: 0.25rem 0.5rem;
 }
 
+/* Active page + hover state */
 .nav-links a.active,
 .nav-links a:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.18);
 }
 
+/* Unit label and select on the right */
 .unit-label {
   color: #e5e7eb;
   font-size: 0.9rem;
@@ -50,7 +62,7 @@
   padding: 0.35rem 0.5rem;
 }
 
-/* Small screens: hide nav links for now (could be extended to hamburger later) */
+/* Small screens: hide nav links for now (could be expanded with a hamburger later) */
 @media (max-width: 700px) {
   .nav-links {
     display: none;

@@ -2,6 +2,26 @@
    Layout and styling for the home page main content.
 */
 
+/* animated hero section */
+.hero {
+  /* darker gradient to improve contrast with white text */
+  background: linear-gradient(135deg, #1d4ed8, #1e40af, #0f172a);
+  background-size: 200% 200%;
+  animation: heroBgShift 18s ease infinite;
+  color: #f9fafb;
+}
+
+.hero h1 {
+  font-size: 2.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.hero .sub {
+  margin: 0;
+  font-size: 1rem;
+  color: #e5e7eb; /* soft but still high contrast */
+}
+
 /* Search section with form */
 .search-section {
   max-width: 700px;
@@ -9,19 +29,19 @@
   padding: 0 1rem 2rem;
 }
 
-/* Use CSS grid for the form: label/input on one row, button on right on larger screens */
+/* Use CSS grid for the form: label/input full width, button on right on larger screens */
 #weather-form {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 0.75rem;
 }
 
-/* Make the form row (label + input) span full width on its row */
+/* Make the form row (label + input) span full width */
 #weather-form .form-row {
   grid-column: 1 / -1;
 }
 
-/* Place the button in the second column */
+/* Place the button in the second column on larger screens */
 #weather-form .btn {
   grid-column: 2;
 }
