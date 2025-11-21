@@ -1,13 +1,70 @@
-.navbar{
-  display:flex;align-items:center;gap:1rem;justify-content:space-between;
-  padding:.75rem 1rem;background:var(--primary);color:#fff;
+/* header.css
+   Styles for the top navigation bar.
+*/
+
+/* Make the whole header bar stick to the top as you scroll */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
 }
-.logo{font-weight:800;color:#fff;text-decoration:none;font-size:1.1rem}
-.nav-links{display:flex;gap:1rem;list-style:none;margin:0;padding:0}
-.nav-links a{color:#fff;text-decoration:none;border-radius:8px;padding:.25rem .5rem}
-.nav-links a.active,.nav-links a:hover{background:rgba(255,255,255,.15)}
-.unit-label{color:#e5e7eb;font-size:.9rem}
-.unit-select{border:0;border-radius:10px;padding:.35rem .5rem}
-@media (max-width:700px){
-  .nav-links{display:none}
+
+/* The actual nav bar content */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--primary);
+  color: #fff;
+}
+
+/* “Atmos” logo link */
+.logo {
+  font-weight: 800;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+/* Main nav links */
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Active page + hover state */
+.nav-links a.active,
+.nav-links a:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Unit label and select on the right */
+.unit-label {
+  color: #e5e7eb;
+  font-size: 0.9rem;
+}
+
+.unit-select {
+  border: 0;
+  border-radius: 10px;
+  padding: 0.35rem 0.5rem;
+}
+
+/* Small screens: hide nav links for now (could be expanded with a hamburger later) */
+@media (max-width: 700px) {
+  .nav-links {
+    display: none;
+  }
 }

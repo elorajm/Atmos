@@ -1,34 +1,61 @@
-/*favorites.css*/
-.favorites{max-width:900px;margin:1.5rem auto;padding:0 1rem}
-.fav-grid{
-  list-style:none;display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-  padding:0;margin:1rem 0;
-}
-.fav-card{
-  background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
-  padding:.9rem;display:flex;justify-content:space-between;align-items:center;
-}
-.fav-link{color:var(--text);text-decoration:none;font-weight:600}
+/* favorites.css
+   Layout for the Favorites page and shared card tweaks.
+*/
 
+.favorites {
+  max-width: 900px;
+  margin: 1.5rem auto;
+  padding: 0 1rem 2rem;
+}
+
+/* Grid of favorite city tiles */
+.fav-grid {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  padding: 0;
+  margin: 1rem 0;
+}
+
+/* Favorite card styling */
+.fav-card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fav-link {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Align actions on the main weather card (home page) */
 .weather-card .card-actions {
   display: flex;
-  justify-content: center; /* This centers the button on the card */;
+  justify-content: center; /* Centers the buttons on the card */
+  gap: 0.5rem;
 }
 
 .weather-card .card-actions .btn {
   flex: 0 0 auto;
   width: auto;
   text-align: center;
-
 }
 
+/* Ensure meta list is nicely spaced */
 .weather-card .meta {
   list-style: none;
   padding: 0;
-  margin: 0 0 1rem 0;   /* <-- adds space below the meta row */
+  margin: 0 0 1rem 0;
   display: flex;
-  justify-content: center;   /* center horizontally */
-  gap: 1rem;                 /* space between items */
+  justify-content: center;
+  gap: 1rem;
 }
 
 .weather-card .meta li {

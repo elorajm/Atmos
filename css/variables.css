@@ -1,12 +1,16 @@
-:root{
-  --primary:#3b82f6;
-  --secondary:#60a5fa;
-  --accent:#fde68a;
-  --bg:#f8fafc;
-  --surface:#ffffff;
-  --text:#0f172a;
-  --muted:#64748b;
-  --radius:12px;
-  --shadow:0 6px 16px rgba(2, 6, 23, 0.08);
-  --transition:200ms ease;
+/* variables.css
+   Global design tokens for colors, spacing, etc.
+*/
+:root {
+  --primary:   #3b82f6;  /* main blue */
+  --secondary: #60a5fa;  /* lighter blue */
+  --accent:    #fde68a;  /* warm yellow */
+  --bg:        #f8fafc;  /* page background */
+  --surface:   #ffffff;  /* cards, panels */
+  --text:      #0f172a;  /* dark text */
+  --muted:     #64748b;  /* gray text */
+
+  --radius: 12px;
+  --shadow: 0 6px 16px rgba(2, 6, 23, 0.08);
+  --transition: 200ms ease;
 }

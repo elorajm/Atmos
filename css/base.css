@@ -1,7 +1,9 @@
-/*base.css*/
+/* base.css
+   Pull in shared CSS pieces in a specific order.
+*/
 @import url('variables.css');
 @import url('global.css');
 @import url('header.css');
 @import url('footer.css');
 @import url('animations.css');
-@import url('favorites.css')
+@import url('favorites.css');
