@@ -63,3 +63,10 @@
   align-items: center;
   justify-content: center;
 }
+
+/*helps with smaller mobile view screens*/
+@media (max-width: 400px) {
+  .fix-grid  {
+    grid-template-columns: 1fr;
+  }
+}

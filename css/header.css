@@ -68,6 +68,6 @@ header {
 @media (max-width: 450px)  { /* BCS - changed from 700px*/
   .nav-links {
     /* display: none; BCS - we do not need this*/
-    gap: 0.5rem; /* BCS - added to reduce gap on small screens */
+    gap: 0.5rem; /* BCS - added to reduce gap on smaller screens */
   }
 }
