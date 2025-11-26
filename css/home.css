@@ -133,5 +133,8 @@
 
   #weather-form .btn {
     grid-column: 1;
+    justify-self: start;
+    width: auto;
+    max-width: 100%;
   }
 }

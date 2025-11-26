@@ -48,8 +48,7 @@ main {
   transition: var(--transition);
   /* BCS added to wrap buttons around their content */
   white-space: normal;
- 
-
+  max-width: 100%;
 }
 
 .btn:hover {
