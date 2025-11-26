@@ -2,25 +2,6 @@
    Layout and styling for the home page main content.
 */
 
-/* animated hero section */
-.hero {
-  /* darker gradient to improve contrast with white text */
-  background: linear-gradient(135deg, #1d4ed8, #1e40af, #0f172a);
-  background-size: 200% 200%;
-  animation: heroBgShift 18s ease infinite;
-  color: #f9fafb;
-}
-
-.hero h1 {
-  font-size: 2.1rem;
-  margin-bottom: 0.25rem;
-}
-
-.hero .sub {
-  margin: 0;
-  font-size: 1rem;
-  color: #e5e7eb; /* soft but still high contrast */
-}
 
 /* Search section with form */
 .search-section {
