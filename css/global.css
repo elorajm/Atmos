@@ -34,12 +34,6 @@ main {
   min-height: 80vh;
 }
 */
-/* Generic page container (used on some pages) */
-.page {
-  padding: 2rem 1rem;
-  max-width: 900px;
-  margin: 0 auto;
-}
 
 /* Buttons */
 .btn {
@@ -102,13 +96,6 @@ select:focus {
   color: #b91c1c;
   min-height: 1.25rem;
   font-size: 0.9rem;
-}
-
-/* Hero section base (more details in home.css) */
-.hero {
-  padding: 2.25rem 1rem;
-  text-align: center;
-  border-bottom: 1px solid #e5e7eb;
 }
 
 /* Screen-reader only text (for invisible headings) */

@@ -1,7 +1,12 @@
-/* the hero */
+/* heroBanner.css */
 
-/* animated hero section */
+/* Hero section base (more details in home.css) */
 .hero {
+  padding: 2.25rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+  
+  /* animated hero section */
   /* darker gradient to improve contrast with white text */
   background: linear-gradient(135deg, #1d4ed8, #1e40af, #0f172a);
   background-size: 200% 200%;

@@ -64,7 +64,7 @@ header {
 }
 
 
-/* Small screens: hide nav links for now (could be expanded with a hamburger later) */
+/* Small screens */
 @media (max-width: 450px)  { /* BCS - changed from 700px*/
   .nav-links {
     /* display: none; BCS - we do not need this*/
