@@ -29,10 +29,11 @@ h3 {
   margin: 0 0 0.5rem;
 }
 
+/*
 main {
-  min-height: 60vh;
+  min-height: 80vh;
 }
-
+*/
 /* Generic page container (used on some pages) */
 .page {
   padding: 2rem 1rem;
@@ -51,6 +52,10 @@ main {
   cursor: pointer;
   box-shadow: var(--shadow);
   transition: var(--transition);
+  /* BCS added to wrap buttons around their content */
+  white-space: normal;
+ 
+
 }
 
 .btn:hover {

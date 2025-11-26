@@ -4,15 +4,12 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contact – Atmos</title>
-
-  <link rel="stylesheet" href="css/base.css"/>
-
   <!-- base page layout -->
-<link rel="stylesheet" href="css/base.css"/>
+    <link rel="stylesheet" href="css/base.css"/>
   <!-- contacts page layout -->
-  <link rel="stylesheet" href="css/contact.css"/>
-
+    <link rel="stylesheet" href="css/contact.css"/>
 </head>
+
 <body>
   <header>
     <nav class="navbar" aria-label="Primary">
@@ -32,44 +29,45 @@
   </header>
 
   <main>
-<!-- Hero section with title and short tagline -->
+    <!-- Hero section with title and short tagline -->
     <section class="hero">
      <h1>Contact Atmos</h1>
     <p>Have a question, suggestion, or feedback?  
       Fill out the form below and we’ll get back to you soon.</p>
     </section>
-
-    
+   
 
     <!-- Contact form -->
-    <form id="contact-form" novalidate>
-      <div class="form-row">
-        <label for="email">Email Address <span aria-hidden="true">*</span></label>
-        <input 
-          type="email"
-          id="email"
-          name="email"
-          required
-          placeholder="you@example.com"
-          aria-describedby="emailError"
-        />
-        <span id="emailError" class="error-message" aria-live="assertive"></span>
-      </div>
+    <section class="contact-card">
+      <form id="contact-form" novalidate>
+        <div class="form-row">
+          <label for="email">Email Address <span aria-hidden="true">*</span></label>
+          <input 
+            type="email"
+            id="email"
+            name="email"
+            required
+            placeholder="you@example.com"
+            aria-describedby="emailError"
+          />
+          <span id="emailError" class="error-message" aria-live="assertive"></span>
+        </div>
 
-      <div class="form-row">
-        <label for="message">Your Message <span aria-hidden="true">*</span></label>
-        <textarea 
-          id="message"
-          name="message"
-          required
-          placeholder="Write your comment here..."
-          aria-describedby="messageError"
-        ></textarea>
-        <span id="messageError" class="error-message" aria-live="assertive"></span>
-      </div>
+        <div class="form-row">
+          <label for="message">Your Message <span aria-hidden="true">*</span></label>
+          <textarea 
+            id="message"
+            name="message"
+            required
+            placeholder="Write your comment here..."
+            aria-describedby="messageError"
+          ></textarea>
+          <span id="messageError" class="error-message" aria-live="assertive"></span>
+        </div>
 
-      <button type="submit" class="btn">Send Message</button>
-    </form>
+        <button type="submit" class="btn">Submit</button>
+      </form>
+    </section>
 
     <!-- Confirmation message -->
     <div id="success" class="success-message">
