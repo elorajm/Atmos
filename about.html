@@ -16,7 +16,15 @@
       <a class="logo" href="index.html">Atmos</a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="favorites.html">Favorites</a></li>
+         <!-- <li><a href="favorites.html">Favorites</a></li> disabling link, making it a drop down list of the favortites -->
+          <li class="nav-fav-dropdown">
+              <button id="fav-dropdown-btn" class="fav-drop-btn">
+                Favorites
+              </button>
+              <ul id="fav-dropdown-menu" class="fav-dropdown-menu">
+                <li class="empty-msg">No Favorites Yet</li>
+              </ul>
+          </li>
         <li><a class="active" href="about.html">Contact</a></li>
       </ul>
 
