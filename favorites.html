@@ -21,11 +21,15 @@
         <li><a href="about.html">Contact</a></li>
       </ul>
 
-      <label class="unit-label" for="unit-select">Units</label>
-      <select id="unit-select" class="unit-select" aria-label="Select temperature unit">
-        <option value="imperial">°F</option>
-        <option value="metric">°C</option>
-      </select>
+     <div class="unit-toggle">
+    <input type="checkbox" id="unit-toggle-input">
+    <label for="unit-toggle-input" class="unit-toggle-label">
+      <span class="unit-option unit-f">°F</span>
+      <span class="toggle-thumb"></span>
+      <span class="unit-option unit-c">°C</span>
+    </label>
+  </div>   
+    </nav>
     </nav>
   </header>
 

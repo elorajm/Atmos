@@ -17,7 +17,7 @@ console.info('Atmos app loaded.');
 const form        = document.querySelector('#weather-form');
 const cityInput   = document.querySelector('#city');
 const cityError   = document.querySelector('#city-error');
-const unitSelect  = document.querySelector('#unit-select');
+const unitToggle = document.querySelector('#unit-toggle-input');
 const resultsWrap = document.querySelector('.weather-results');
 const favDropdownMenu = document.getElementById('fav-dropdown-menu');
 const favDropdownBtn  = document.getElementById('fav-dropdown-btn');
@@ -33,24 +33,46 @@ const favDropdownBtn  = document.getElementById('fav-dropdown-btn');
       favDropdownMenu.innerHTML = '<li class="empty-msg">Your Favorites Are Empty</li>';
       return;
     }
-    favorites.forEach((cityName) => {
+   /* favorites.forEach((cityName) => {
       const li = document.createElement('li');
       li.textContent = cityName;
       li.dataset.city = cityName;
+      favDropdownMenu.appendChild(li); 
+    }) ;*/
+    
+    favorites.forEach((cityName) => {
+      const li = document.createElement('li');
+      li.dataset.city = cityName;
+      li.innerHTML = `
+        <button 
+          type="button" class="fav-delete-btn" aria-label="Remove ${cityName} from favorites">🗑</button>
+          <span class="fav-city-label">${cityName}</span>`;
       favDropdownMenu.appendChild(li);
     })
+
+
+
   }
 
 /**
- * Get the currently selected unit from the dropdown.
- */
+ * Get select the unit type from a toggle switch */
 function getCurrentUnit() {
-  return unitSelect ? unitSelect.value : 'imperial';
+  return unitToggle && unitToggle.checked ? "metric" : "imperial";
+}
+
+if (unitToggle) {
+  const savedUnit = loadUnit() || "metric";  // default to metric (°C)
+  unitToggle.checked = savedUnit === "metric";
+
+  unitToggle.addEventListener("change", () => {
+    const newUnit = unitToggle.checked ? "metric" : "imperial";
+    saveUnit(newUnit);
+  });
 }
 
 /**
  * Initialize unit dropdown from localStorage and listen for changes.
- */
+ 
 if (unitSelect) {
   const savedUnit = loadUnit();
   unitSelect.value = savedUnit;
@@ -59,7 +81,7 @@ if (unitSelect) {
     saveUnit(unitSelect.value);
     // Optional: could re-fetch weather here if something is already displayed.
   });
-}
+}*/
 
 // ----- Form validation for the city input -----
 
@@ -235,34 +257,63 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  //Click handler for favorites dropdown menu
-  document.addEventListener('DOMContentLoaded', () => {
-    if (!favDropdownMenu) return;
-    //builds on page load
-   refreshFavoritesDropdown();
-    //open/close dropdown on button click
-    if (favDropdownBtn) {
-      favDropdownBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        favDropdownMenu.classList.toggle('show');
-      });
+  // Click handler for favorites dropdown menu
+document.addEventListener('DOMContentLoaded', () => {
+  if (!favDropdownMenu) return;
+
+  // Build dropdown on page load
+  refreshFavoritesDropdown();
+
+  // Open/close dropdown on button click
+  if (favDropdownBtn) {
+    favDropdownBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      favDropdownMenu.classList.toggle('show');
+    });
+  }
+
+  // Close dropdown when mouse leaves the menu
+  favDropdownMenu.addEventListener('mouseleave', () => {
+  favDropdownMenu.classList.remove('show');
+});
+
+// Close dropdown when clicking anywhere outside menu or button (for mobile + desktop)
+document.addEventListener('click', (e) => {
+  if (
+    !e.target.closest('#fav-dropdown-btn') &&
+    !e.target.closest('#fav-dropdown-menu')
+  ) {
+    favDropdownMenu.classList.remove('show');
+  }
+});
+
+  // Click inside dropdown
+  favDropdownMenu.addEventListener('click', (e) => {
+    const li = e.target.closest('li');
+    if (!li || li.classList.contains('empty-msg')) return;
+
+    // If we click the trash icon remove selected favorite only
+    const deleteBtn = e.target.closest('.fav-delete-btn');
+    if (deleteBtn) {
+      const cityName = li.dataset.city;
+      removeCityTile(cityName);
+      refreshFavoritesDropdown();
+      e.stopPropagation();
+      return;
     }
 
-    //clicking on favorite city in dropdown will load its weather
-    favDropdownMenu.addEventListener('click', (e) => {
-      const li = e.target.closest('li');
-      if (!li || li.classList.contains('empty-msg')) return;
-      const cityName = li.dataset.city;
-      window.location.href = `index.html?city=${encodeURIComponent(cityName)}`;
-    });
+    //Clicking the city name loads that favorite
+    const cityName = li.dataset.city;
+    window.location.href = `index.html?city=${encodeURIComponent(cityName)}`;
+  });
 
-    //close dropdown if clicking outside of button or men
-    document.addEventListener('click', (e) => {
-      if (
-        !e.target.closest('#fav-dropdown-btn') &&
-        !e.target.closest('#fav-dropdown-menu')) 
-          { 
-            favDropdownMenu.classList.remove('show');
-          } 
-    }); 
+  // Close dropdown if clicking outside of button or menu
+  document.addEventListener('click', (e) => {
+    if (
+      !e.target.closest('#fav-dropdown-btn') &&
+      !e.target.closest('#fav-dropdown-menu')
+    ) {
+      favDropdownMenu.classList.remove('show');
+    }
+  });
 });
