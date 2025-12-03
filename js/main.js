@@ -253,9 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const li = e.target.closest('li');
       if (!li || li.classList.contains('empty-msg')) return;
       const cityName = li.dataset.city;
-      const unit = getCurrentUnit();
-      fetchAndDisplayWeather(cityName, unit);
-      favDropdownMenu.classList.remove('show');
+      window.location.href = `index.html?city=${encodeURIComponent(cityName)}`;
     });
 
     //close dropdown if clicking outside of button or men

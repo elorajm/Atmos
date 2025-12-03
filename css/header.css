@@ -92,14 +92,16 @@ header {
 .fav-dropdown-menu {
   position: absolute;
   top: 110%;
-  right: 0;
-  background: #ffffff;
+  left: 0;
+  background: rgba(255, 255, 255, 0.95); /* softer white */
+  backdrop-filter: blur(6px); /* frosted effect */
   color: #0f172a;
   list-style: none;
   padding: 0.5rem 0;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  min-width: 180px;
+  border-radius: 12px;
+  /*box-shadow: var(--shadow);*/
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  min-width: 200px;
   display: none; /* hidden until clicked */
   z-index: 999;
 }
