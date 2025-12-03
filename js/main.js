@@ -24,7 +24,22 @@ const favDropdownBtn  = document.getElementById('fav-dropdown-btn');
 // ----- Helpers for units -----
 
 /* drop down menu for favorites */
-
+  function refreshFavoritesDropdown() {
+    if (!favDropdownMenu) return;
+    const favorites = getFavorites();
+    /*clear current items*/
+    favDropdownMenu.innerHTML = '';
+    if (!favorites.length) {
+      favDropdownMenu.innerHTML = '<li class="empty-msg">Your Favorites Are Empty</li>';
+      return;
+    }
+    favorites.forEach((cityName) => {
+      const li = document.createElement('li');
+      li.textContent = cityName;
+      li.dataset.city = cityName;
+      favDropdownMenu.appendChild(li);
+    })
+  }
 
 /**
  * Get the currently selected unit from the dropdown.
@@ -154,11 +169,13 @@ function wireUpCardButtons() {
   saveBtn.addEventListener('click', () => {
     saveCityTile(cityName);
     refreshButtons();
+    refreshFavoritesDropdown();
   });
 
   removeBtn.addEventListener('click', () => {
     removeCityTile(cityName);
     refreshButtons();
+    refreshFavoritesDropdown();
   });
 
   // Set initial visibility based on favorites
@@ -215,22 +232,39 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     favList.appendChild(li);
+    });
   });
 
-  // Click handler for removing favorites from the list
-  favList.addEventListener('click', (e) => {
-    const btn = e.target.closest('.remove-fav');
-    if (!btn) return;
-
-    const cityName = btn.dataset.city;
-    removeCityTile(cityName);
-
-    // Remove the card from the DOM
-    btn.closest('.fav-card')?.remove();
-
-    // If now empty, show placeholder message
-    if (!favList.querySelector('.fav-card')) {
-      favList.innerHTML = '<li>No favorite cities saved yet.</li>';
+  //Click handler for favorites dropdown menu
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!favDropdownMenu) return;
+    //builds on page load
+   refreshFavoritesDropdown();
+    //open/close dropdown on button click
+    if (favDropdownBtn) {
+      favDropdownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        favDropdownMenu.classList.toggle('show');
+      });
     }
-  });
+
+    //clicking on favorite city in dropdown will load its weather
+    favDropdownMenu.addEventListener('click', (e) => {
+      const li = e.target.closest('li');
+      if (!li || li.classList.contains('empty-msg')) return;
+      const cityName = li.dataset.city;
+      const unit = getCurrentUnit();
+      fetchAndDisplayWeather(cityName, unit);
+      favDropdownMenu.classList.remove('show');
+    });
+
+    //close dropdown if clicking outside of button or men
+    document.addEventListener('click', (e) => {
+      if (
+        !e.target.closest('#fav-dropdown-btn') &&
+        !e.target.closest('#fav-dropdown-menu')) 
+          { 
+            favDropdownMenu.classList.remove('show');
+          } 
+    }); 
 });
