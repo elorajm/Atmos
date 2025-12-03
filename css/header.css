@@ -63,29 +63,12 @@ header {
   padding: 0.35rem 0.5rem;
 }
 
-
-/* Small screens */
-@media (max-width: 450px)  { /* BCS - changed from 700px*/
-  .navbar {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-}  
-  
-.nav-links {
-  /* display: none; BCS - we do not need this*/
-  width: 100%; /* BCS - added to make nav links full width on small screens */
-  justify-content: center; /* BCS - added to center nav links on small screens */
-  flex-wrap: wrap; /* BCS - added to allow nav links to wrap on small screens */
-  gap: 0.5rem; /* BCS - added to reduce gap on smaller screens */
-}
-
 .unit-label, .unit-select {
   align-self: center;
 }
 
 /*dropdown containor*/
-.nav-fave-dropdown {
+.nav-fav-dropdown {
   position: relative;
 
 }
@@ -100,7 +83,7 @@ header {
   font-size: 1rem;
 }
 
-.fav-drop-btn-hover {
+.fav-drop-btn:hover {
   background: rgba(255,255,255,0.18);
   border-radius: 8px;
 }
@@ -142,5 +125,20 @@ header {
   cursor: default;
 }
 
+/* Small screens */
+@media (max-width: 450px)  { /* BCS - changed from 700px*/
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}  
 
+.nav-links {
+  /* display: none; BCS - we do not need this*/
+  width: 100%; /* BCS - added to make nav links full width on small screens */
+  justify-content: center; /* BCS - added to center nav links on small screens */
+  flex-wrap: wrap; /* BCS - added to allow nav links to wrap on small screens */
+  gap: 0.5rem; /* BCS - added to reduce gap on smaller screens */
+}
+  
 }

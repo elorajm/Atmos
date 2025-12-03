@@ -23,6 +23,9 @@ const favDropdownMenu = document.getElementById('fav-dropdown-menu');
 const favDropdownBtn  = document.getElementById('fav-dropdown-btn');
 // ----- Helpers for units -----
 
+/* drop down menu for favorites */
+
+
 /**
  * Get the currently selected unit from the dropdown.
  */
