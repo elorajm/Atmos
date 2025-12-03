@@ -66,8 +66,81 @@ header {
 
 /* Small screens */
 @media (max-width: 450px)  { /* BCS - changed from 700px*/
-  .nav-links {
-    /* display: none; BCS - we do not need this*/
-    gap: 0.5rem; /* BCS - added to reduce gap on smaller screens */
-  }
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}  
+  
+.nav-links {
+  /* display: none; BCS - we do not need this*/
+  width: 100%; /* BCS - added to make nav links full width on small screens */
+  justify-content: center; /* BCS - added to center nav links on small screens */
+  flex-wrap: wrap; /* BCS - added to allow nav links to wrap on small screens */
+  gap: 0.5rem; /* BCS - added to reduce gap on smaller screens */
+}
+
+.unit-label, .unit-select {
+  align-self: center;
+}
+
+/*dropdown containor*/
+.nav-fave-dropdown {
+  position: relative;
+
+}
+
+/* Button styling */
+.fav-drop-btn {
+  background: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+}
+
+.fav-drop-btn-hover {
+  background: rgba(255,255,255,0.18);
+  border-radius: 8px;
+}
+
+/*dropdawn menu*/
+.fav-dropdown-menu {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #ffffff;
+  color: #0f172a;
+  list-style: none;
+  padding: 0.5rem 0;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  min-width: 180px;
+  display: none; /* hidden until clicked */
+  z-index: 999;
+}
+
+/*show dropdown */
+.fav-dropdown-menu.show {
+  display: block;
+}
+
+/*dropdown items */
+.fav-dropdown-menu li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.fav-dropdown-menu li:hover {
+  background: #e2e8f0;
+}
+
+/*placeholder message when empty */
+.fav-dropdown-menu .empty-msg {
+  color: #64748b;
+  cursor: default;
+}
+
+
 }

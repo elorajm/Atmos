@@ -19,18 +19,36 @@
       <!-- Main navigation links -->
       <ul class="nav-links">
         <li><a class="active" href="index.html">Home</a></li>
-        <li><a href="favorites.html">Favorites</a></li>
+        <!-- <li><a href="favorites.html">Favorites</a></li> disabling link, making it a drop down list of the favortites -->
+          <li class="nav-fav-dropdown">
+              <button id="fav-dropdown-btn" class="fav-dropdown-menu">
+                Favorites >
+              </button>
+              <ul id="fav-dropdown-menu" class="fav-dropdown-menu">
+                <li class="empty-msg">No Favorites Yet</li>
+              </ul>
+          </li>
         <li><a href="about.html">Contact</a></li>
       </ul>
 
-      <!-- Unit selector: user can choose °F or °C (stored in localStorage) -->
+      <!-- **Disabling to test an idea**
+      Unit selector: user can choose °F or °C (stored in localStorage)
       <label class="unit-label" for="unit-select">Units</label>
       <select id="unit-select" class="unit-select" aria-label="Select temperature unit">
         <option value="imperial">°F</option>
         <option value="metric">°C</option>
       </select>
     </nav>
-  </header>
+  </header>  -->
+
+    <div class="temp-toggle">
+      <input type="radio" id="tempF" name="unit" value="imperial">
+      <label for="tempF">°F</label>
+      <input type="radio" id="tempC" name="unit" value="metric">
+      <label for="tempC">°C</label>
+      <span class="toggle-slider"></span>
+    </div>
+  </nav>      
 
   <main id="main">
     <!-- Hero section with title and short tagline -->

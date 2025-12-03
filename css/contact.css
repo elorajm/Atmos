@@ -10,7 +10,7 @@
   animation: fadeIn 0.7s ease;
 }
 
-    form .contact-card {
+    .contact-card form {
       display: flex;
       flex-direction: column;
       gap: 1rem;

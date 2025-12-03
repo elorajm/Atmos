@@ -59,7 +59,12 @@ export function renderWeatherCard(data, unit = 'imperial', isFavorite = false) {
             ${cityDisplay}
           </a>
         </h3>
-        <p class="timestamp">Updated: ${updated}</p>
+        <p class="timestamp">
+          Updated: 
+          <time datetime="${data.location.localtime.replace(' ', 'T')}">
+            ${updated}
+          </time>
+        </p>
       </header>
 
       <div class="temp-row">

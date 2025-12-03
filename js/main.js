@@ -19,7 +19,8 @@ const cityInput   = document.querySelector('#city');
 const cityError   = document.querySelector('#city-error');
 const unitSelect  = document.querySelector('#unit-select');
 const resultsWrap = document.querySelector('.weather-results');
-
+const favDropdownMenu = document.getElementById('fav-dropdown-menu');
+const favDropdownBtn  = document.getElementById('fav-dropdown-btn');
 // ----- Helpers for units -----
 
 /**
