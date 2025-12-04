@@ -9,7 +9,7 @@ const API_KEY = 'a52499ff54b643158ec24459241607'; // From ZipTemp
  * @returns {Promise<object>} Weather API JSON response
  */
 export async function getJSONWeather(city) {
-  const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${encodeURIComponent(
+  const url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${encodeURIComponent(
     city
   )}`;
 

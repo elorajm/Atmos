@@ -190,6 +190,10 @@ async function fetchAndDisplayWeather(city, unit) {
     const isFavorite = favorites.includes(cityDisplay);
 
     renderWeatherCard(data, unit, isFavorite);
+    const searchSection = document.querySelector('.search-section');
+    if (searchSection) {
+      searchSection.style.display = 'none';
+    }
     wireUpCardButtons();
   } catch (err) {
     console.error(err);
@@ -207,10 +211,10 @@ async function fetchAndDisplayWeather(city, unit) {
  */
 function wireUpCardButtons() {
   const saveBtn   = document.querySelector('.weather-card .save-btn');
-  const removeBtn = document.querySelector('.weather-card .remove-btn');
+  //const removeBtn = document.querySelector('.weather-card .remove-btn');
 
-  if (!saveBtn || !removeBtn) return;
-
+  //if (!saveBtn || !removeBtn) return;
+  if (!saveBtn) return;
   const cityName = saveBtn.dataset.city;
 
   const refreshButtons = () => {
@@ -219,10 +223,10 @@ function wireUpCardButtons() {
 
     if (isFavorite) {
       saveBtn.style.display   = 'none';
-      removeBtn.style.display = 'inline-block';
+      //removeBtn.style.display = 'inline-block';
     } else {
       saveBtn.style.display   = 'inline-block';
-      removeBtn.style.display = 'none';
+      //removeBtn.style.display = 'none';
     }
   };
 
@@ -232,11 +236,11 @@ function wireUpCardButtons() {
     refreshFavoritesDropdown();
   });
 
-  removeBtn.addEventListener('click', () => {
+  /* removeBtn.addEventListener('click', () => {
     removeCityTile(cityName);
     refreshButtons();
-    refreshFavoritesDropdown();
-  });
+    refreshFavoritesDropdown(); 
+  }); */
 
   // Set initial visibility based on favorites
   refreshButtons();
@@ -348,4 +352,21 @@ document.addEventListener('DOMContentLoaded', () => {
       favDropdownMenu.classList.remove('show');
     }
   });
+
+  // New Search button click handler
+  document.addEventListener('click', (e) => {
+    if (e.target.id === 'new-search-btn') {
+      // Show the search section again
+      const searchSection = document.querySelector('.search-section');
+      if (searchSection) {
+        searchSection.style.display = '';
+      }
+      if (resultsWrap) {clearResults();} // Clear current weather card/results
+      if (cityInput) {cityInput.value = ''; cityInput.focus();} // Reset the input + errors
+      if (cityError) {
+        cityError.textContent = '';
+      }
+    }
+});
+
 });

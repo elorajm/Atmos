@@ -82,13 +82,11 @@ export function renderWeatherCard(data, unit = 'imperial', isFavorite = false) {
                 type="button"
                 data-city="${cityDisplay}"
                 style="display:${isFavorite ? 'none' : 'inline-block'}">
-          Save City
+          Add to Favorites
         </button>
-        <button class="btn remove-btn"
-                type="button"
-                data-city="${cityDisplay}"
-                style="display:${isFavorite ? 'inline-block' : 'none'}">
-          Remove City
+        <button id="new-search-btn" 
+                class="btn secondary">
+        New Search
         </button>
       </div>
     </article>
