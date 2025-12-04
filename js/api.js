@@ -26,5 +26,6 @@ export async function getJSONWeather(city) {
   }
 
   const data = await response.json();
+  console.log('Weather API response:', data);
   return data;
 }
