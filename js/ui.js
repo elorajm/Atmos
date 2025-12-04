@@ -85,7 +85,8 @@ export function renderWeatherCard(data, unit = 'imperial', isFavorite = false) {
           Add to Favorites
         </button>
         <button id="new-search-btn" 
-                class="btn secondary">
+                type="button"
+                class="btn newSearch-btn">
         New Search
         </button>
       </div>
