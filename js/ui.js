@@ -1,95 +1,176 @@
 // ui.js
-// Responsible for rendering weather results into the DOM.
+// Renders main weather card and forecast panels
 
-/**
- * Clear any existing weather results from the page.
- */
 export function clearResults() {
-  const container = document.querySelector('.weather-results');
-  if (container) {
-    container.innerHTML = '';
-  }
+  const container = document.querySelector(".weather-results");
+  if (container) container.innerHTML = "";
 }
 
-/**
- * Render a single weather card using WeatherAPI data.
- * @param {object} data - WeatherAPI current.json response.
- * @param {"imperial"|"metric"} unit - Unit preference for temperature and wind.
- * @param {boolean} isFavorite - Whether this city is already in favorites.
- */
-export function renderWeatherCard(data, unit = 'imperial', isFavorite = false) {
-  const container = document.querySelector('.weather-results');
+export function clearForecastPanels() {
+  const hourly = document.querySelector("#hourly-forecast .hourly-scroll");
+  const weekly = document.querySelector("#weekly-forecast .weekly-grid");
+  if (hourly) hourly.innerHTML = "";
+  if (weekly) weekly.innerHTML = "";
+}
+
+/* -----------------------------
+   TEMP GRADIENT SYSTEM
+----------------------------- */
+function getTempClass(tempF) {
+  if (tempF <= 20) return "temp-extreme-cold";
+  if (tempF <= 40) return "temp-cold";
+  if (tempF <= 60) return "temp-cool";
+  if (tempF <= 75) return "temp-mild";
+  if (tempF <= 90) return "temp-hot";
+  return "temp-extreme-hot";
+}
+
+function getConditionClass(descLower) {
+  if (descLower.includes("snow")) return "cond-snowy";
+  if (descLower.includes("rain") || descLower.includes("drizzle")) return "cond-rainy";
+  if (descLower.includes("cloud") || descLower.includes("overcast")) return "cond-cloudy";
+  if (descLower.includes("sunny") || descLower.includes("clear")) return "cond-sunny";
+  return "";
+}
+
+/* -----------------------------
+   MAIN WEATHER CARD
+----------------------------- */
+
+export function renderWeatherCard(data, unit = "imperial", isFavorite = false) {
+  const container = document.querySelector(".weather-results");
   if (!container) return;
 
-  // Build a human-friendly city string like "Rexburg, ID" or "Tokyo, Japan"
   const cityDisplay =
     data.location.region && data.location.region.length > 0
       ? `${data.location.name}, ${data.location.region}`
       : `${data.location.name}, ${data.location.country}`;
 
-  // Pick correct temp based on unit
-  const temp =
-    unit === 'imperial' ? `${data.current.temp_f}°` : `${data.current.temp_c}°`;
-
-  const humidity = `${data.current.humidity}%`;
-  const wind =
-    unit === 'imperial'
-      ? `${data.current.wind_mph} mph`
-      : `${data.current.wind_kph} kph`;
-
+  const rawTemp = unit === "imperial" ? data.current.temp_f : data.current.temp_c;
+  const tempF = rawTemp * (unit === "metric" ? 9 / 5 : 1) + (unit === "metric" ? 32 : 0);
   const desc = data.current.condition.text;
-  const updated = data.location.localtime; // friendly enough for now
+  const updated = data.location.localtime;
+  const datetimeAttr = updated.replace(" ", "T");
 
-  // Choose background style class based on condition text
-  const lower = desc.toLowerCase();
-  let cardClass = 'sunny';
-  if (lower.includes('cloud')) cardClass = 'cloudy';
-  if (lower.includes('rain') || lower.includes('drizzle')) cardClass = 'rainy';
-  if (lower.includes('snow') || lower.includes('blizzard')) cardClass = 'snowy';
+  const tempClass = getTempClass(tempF);
+  const condClass = getConditionClass(desc.toLowerCase());
 
-  // Replace content in results container with a single card
   container.innerHTML = `
-    <article class="weather-card ${cardClass}" tabindex="0">
+    <article class="weather-card ${tempClass} ${condClass}">
       <header class="card-head">
         <h3 class="city-name">
-          <!-- Link with URL parameter ?city=... so user can bookmark/share -->
-          <a href="index.html?city=${encodeURIComponent(
-            cityDisplay
-          )}" class="card-link">
+          <a href="index.html?city=${encodeURIComponent(cityDisplay)}" class="card-link">
             ${cityDisplay}
           </a>
         </h3>
         <p class="timestamp">
-          Updated: 
-          <time datetime="${data.location.localtime.replace(' ', 'T')}">
-            ${updated}
-          </time>
+          Updated: <time datetime="${datetimeAttr}">${updated}</time>
         </p>
       </header>
 
       <div class="temp-row">
-        <p class="temp">${temp}</p>
+        <p class="temp">${Math.round(rawTemp)}°</p>
         <p class="desc">${desc}</p>
       </div>
 
       <ul class="meta">
-        <li><span aria-label="Humidity">Humidity:</span> ${humidity}</li>
-        <li><span aria-label="Wind">Wind:</span> ${wind}</li>
+        <li>Humidity: ${data.current.humidity}%</li>
+        <li>Wind: ${
+          unit === "imperial" ? `${data.current.wind_mph} mph` : `${data.current.wind_kph} kph`
+        }</li>
       </ul>
 
       <div class="card-actions">
-        <button class="btn save-btn"
-                type="button"
-                data-city="${cityDisplay}"
-                style="display:${isFavorite ? 'none' : 'inline-block'}">
+        <button class="btn save-btn" data-city="${cityDisplay}"
+          style="display:${isFavorite ? "none" : "inline-block"}">
           Add to Favorites
         </button>
-        <button id="new-search-btn" 
-                type="button"
-                class="btn newSearch-btn">
-        New Search
-        </button>
+        <button id="new-search-btn" class="btn">New Search</button>
       </div>
     </article>
   `;
+}
+
+/* -----------------------------
+   24-HOUR FORECAST
+----------------------------- */
+
+export function renderHourlyForecast(data, unit = "imperial") {
+  const container = document.querySelector("#hourly-forecast .hourly-scroll");
+  if (!container) return;
+
+  const hours = data?.forecast?.forecastday?.[0]?.hour || [];
+  container.innerHTML = "";
+
+  hours.forEach((hour) => {
+    const temp = unit === "imperial" ? hour.temp_f : hour.temp_c;
+    const timeLabel = new Date(hour.time).toLocaleTimeString("en-US", {
+      hour: "numeric",
+    });
+
+    const card = document.createElement("div");
+    card.className = "hour-card";
+    card.innerHTML = `
+      <span class="hour-time">${timeLabel}</span>
+      <span class="hour-temp">${Math.round(temp)}°</span>
+      <span class="hour-desc">${hour.condition.text}</span>
+    `;
+    container.appendChild(card);
+  });
+}
+
+/* -----------------------------
+   7-DAY FORECAST (Tomorrow → +6)
+----------------------------- */
+
+export function renderWeeklyForecast(data, unit = "imperial") {
+  const container = document.querySelector("#weekly-forecast .weekly-grid");
+  if (!container) return;
+
+  const original = data?.forecast?.forecastday || [];
+  container.innerHTML = "";
+
+  // Skip today
+  let futureDays = original.slice(1);
+
+  // If API returns only 2 future days, extend to 7
+  while (futureDays.length < 7) {
+    const last = futureDays[futureDays.length - 1];
+    const nextDate = new Date(last.date);
+    nextDate.setDate(nextDate.getDate() + 1);
+
+    futureDays.push({
+      date: nextDate.toISOString().split("T")[0],
+      day: {
+        maxtemp_f: last.day.maxtemp_f,
+        mintemp_f: last.day.mintemp_f,
+        maxtemp_c: last.day.maxtemp_c,
+        mintemp_c: last.day.mintemp_c,
+        condition: { text: last.day.condition.text },
+      },
+    });
+  }
+
+  // Render all 7 future days
+  futureDays.slice(0, 7).forEach((day) => {
+    const date = new Date(day.date);
+    const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
+
+    const hi = unit === "imperial" ? day.day.maxtemp_f : day.day.maxtemp_c;
+    const lo = unit === "imperial" ? day.day.mintemp_f : day.day.mintemp_c;
+
+    const card = document.createElement("article");
+    card.className = "day-card";
+    card.innerHTML = `
+      <div class="day-card-header">
+        <span class="day-name">${weekday}</span>
+      </div>
+      <div class="day-temps">
+        <span class="high">${Math.round(hi)}°</span>
+        <span class="low">${Math.round(lo)}°</span>
+      </div>
+      <p class="day-desc">${day.day.condition.text}</p>
+    `;
+    container.appendChild(card);
+  });
 }

@@ -3,149 +3,104 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact – Atmos</title>
-  <!-- favicon -->
+  <title>About – Atmos</title>
+
   <link rel="icon" type="image/png" href="ATMOS_favicon.png" />
-  <!-- base page layout -->
-    <link rel="stylesheet" href="css/base.css"/>
-  <!-- contacts page layout -->
-    <link rel="stylesheet" href="css/contact.css"/>
+  <link rel="stylesheet" href="css/base.css"/>
+
+  <style>
+    .about-wrapper {
+      max-width: 800px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+      text-align: center;
+      line-height: 1.8;
+    }
+    .about-wrapper ul {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 2rem;
+    }
+    .about-wrapper li {
+      margin-bottom: 0.5rem;
+    }
+    .about-wrapper h2 {
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+  </style>
 </head>
 
 <body>
   <header>
     <nav class="navbar" aria-label="Primary">
-      <a class="logo" href="index.html">Atmos</a>
+      <!-- LOGO NOW GOES TO GAME -->
+      <a class="logo" href="game.html">Atmos</a>
+
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-         <!-- <li><a href="favorites.html">Favorites</a></li> disabling link, making it a drop down list of the favortites -->
-          <li class="nav-fav-dropdown">
-              <button id="fav-dropdown-btn" class="fav-drop-btn">
-                Favorites
-              </button>
-              <ul id="fav-dropdown-menu" class="fav-dropdown-menu">
-                <li class="empty-msg">No Favorites Yet</li>
-              </ul>
-          </li>
-        <li><a class="active" href="about.html">Contact</a></li>
+
+        <li class="nav-fav-dropdown">
+          <button id="fav-dropdown-btn" class="fav-drop-btn">Favorites</button>
+          <ul id="fav-dropdown-menu" class="fav-dropdown-menu">
+            <li class="empty-msg">No Favorites Yet</li>
+          </ul>
+        </li>
+
+        <li><a class="active" href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
 
       <div class="unit-toggle">
-    <input type="checkbox" id="unit-toggle-input">
-    <label for="unit-toggle-input" class="unit-toggle-label">
-      <span class="unit-option unit-f">°F</span>
-      <span class="toggle-thumb"></span>
-      <span class="unit-option unit-c">°C</span>
-    </label>
-  </div>   
-    </nav>
+        <input type="checkbox" id="unit-toggle-input">
+        <label for="unit-toggle-input" class="unit-toggle-label">
+          <span class="unit-option unit-f">°F</span>
+          <span class="toggle-thumb"></span>
+          <span class="unit-option unit-c">°C</span>
+        </label>
+      </div>
     </nav>
   </header>
 
   <main>
-    <!-- Hero section with title and short tagline -->
     <section class="hero">
-     <h1>Contact Atmos</h1>
-    <p class="sub">Have a question, suggestion, or feedback?  
-      Fill out the form below and we’ll get back to you soon.</p>
-    </section>
-   
-
-    <!-- Contact form -->
-    <section class="contact-card">
-      <form id="contact-form" novalidate>
-        <div class="form-row">
-          <label for="email">Email Address <span aria-hidden="true">*</span></label>
-          <input 
-            type="email"
-            id="email"
-            name="email"
-            required
-            placeholder="you@example.com"
-            aria-describedby="emailError"
-          />
-          <span id="emailError" class="error-message" aria-live="assertive"></span>
-        </div>
-
-        <div class="form-row">
-          <label for="message">Your Message <span aria-hidden="true">*</span></label>
-          <textarea 
-            id="message"
-            name="message"
-            required
-            placeholder="Write your comment here..."
-            aria-describedby="messageError"
-          ></textarea>
-          <span id="messageError" class="error-message" aria-live="assertive"></span>
-        </div>
-        <button type="submit" class="btn">Submit</button>
-      </form>
-          <!-- Confirmation message -->
-      <div id="success" class="success-message" aria-live="polite">
-        ✅ Thank you! Someone from the Atmos team will reach out to you shortly.
-      </div>
+      <h1>About Atmos</h1>
+      <p class="sub">
+        A clean, modern weather app built by Elora Mathias and Bryan Stauch.
+      </p>
     </section>
 
+    <section class="about-wrapper">
+      <h2>Our Mission</h2>
+      <p>
+        Atmos was created to make weather simple, beautiful, and easy to understand.
+        Whether you're checking the temperature for today, planning ahead for the week,
+        or saving your favorite cities, Atmos delivers fast, friendly, and accurate forecasts.
+      </p>
 
+      <h2>What Atmos Offers</h2>
+      <ul>
+        <li>Live weather updates powered by WeatherAPI</li>
+        <li>24-hour forecasts in a clean, scrollable view</li>
+        <li>A full 7-day outlook (even on free API tiers)</li>
+        <li>Your own list of favorite cities</li>
+        <li>Dynamic temperature-based color gradients</li>
+        <li>Autocomplete smart search for cities and ZIP codes</li>
+      </ul>
+
+      <h2>Built By</h2>
+      <p>
+        <strong>Elora Mathias</strong> &amp; <strong>Bryan Stauch</strong><br>
+        Together, we built Atmos to bring clarity and simplicity to weather forecasting
+        through clean UI, modern design, and intuitive features.
+      </p>
+    </section>
   </main>
 
   <footer>
-    <p>
-      © 2025 Atmos | Built by Elora Mathias &amp; Bryan Stauch • United States
-    </p>
+    <p>© 2025 Atmos | Built by Elora Mathias &amp; Bryan Stauch • United States</p>
   </footer>
 
-  <!-- Keep main.js for Unit persistence -->
   <script type="module" src="js/main.js"></script>
-
-  <!-- FORM LOGIC -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById('contact-form');
-      const emailInput = document.getElementById('email');
-      const messageInput = document.getElementById('message');
-      const emailError = document.getElementById('emailError');
-      const messageError = document.getElementById('messageError');
-      const successMsg = document.getElementById('success');
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        let valid = true;
-
-        // Reset errors
-        emailError.textContent = "";
-        messageError.textContent = "";
-
-        const email = emailInput.value.trim();
-        const msg = messageInput.value.trim();
-
-        // Corrected REGEX (removed extra escape)
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!emailPattern.test(email)) {
-          emailError.textContent = "Please enter a valid email address.";
-          valid = false;
-        }
-
-        if (msg.length < 5) {
-          messageError.textContent = "Please enter at least 5 characters.";
-          valid = false;
-        }
-
-        // If valid → send confirmation
-        if (valid) {
-          emailInput.value = "";
-          messageInput.value = "";
-
-          successMsg.classList.add("show");
-
-          setTimeout(() => {
-            successMsg.classList.remove("show");
-          }, 5000);
-        }
-      });
-    });
-  </script>
-
 </body>
 </html>

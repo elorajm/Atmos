@@ -1,0 +1,111 @@
+/* game.css
+   Storm Dodge – cute cartoony weather dodge game
+*/
+
+.game-wrapper {
+  max-width: 900px;
+  margin: 2.5rem auto 3.5rem;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.game-panel {
+  width: 100%;
+  max-width: 500px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.75rem 1.75rem 2rem;
+  position: relative;
+}
+
+/* Game info text */
+.game-info {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.game-info span {
+  display: inline-block;
+  min-width: 1.4rem;
+  padding: 0.1rem 0.3rem;
+  margin: 0 0.1rem;
+  border-radius: 6px;
+  background: #e5e7eb;
+}
+
+/* Canvas container */
+.canvas-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* Canvas styling */
+#gameCanvas {
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+  background: linear-gradient(180deg, #1d4ed8 0%, #0f172a 70%);
+}
+
+/* Scoreboard */
+.scoreboard {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Overlay for start & game over */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-content {
+  background: rgba(15, 23, 42, 0.95);
+  color: #f9fafb;
+  text-align: center;
+  padding: 1.75rem 1.5rem;
+  border-radius: 16px;
+  max-width: 320px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.6);
+}
+
+.overlay-content h2 {
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+}
+
+.overlay-content p {
+  margin-top: 0;
+  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+}
+
+/* Make the button stand out on dark overlay */
+.overlay .btn {
+  background: #38bdf8;
+}
+.overlay .btn:hover {
+  background: #22c55e;
+}
+
+/* Mobile tweaks */
+@media (max-width: 500px) {
+  .game-panel {
+    padding: 1.25rem 1.25rem 1.75rem;
+  }
+  #gameCanvas {
+    width: 100%;
+    height: auto;
+  }
+}

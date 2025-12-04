@@ -1,55 +1,7 @@
-WDD 231 Team Project Part 1
-Proposal
-●	Follow the assignment instructions for meeting your partner and brainstorming, then complete the information below.
-Team Project Information
-Team Members	Elora Mathias, Bryan Stauch
-Project Name	Weather Tracker - Atmos
-Description of the Project	Atmos is an interactive web application that allows users to check current weather conditions and forecasts for any city. Users can search by city name to view temperature, humidity, wind speed, and short weather description. The app will use a weather API to fetch real-time data and store favorite locations in local storage. It will feature a clean, responsive layout and engaging visuals like weather icons and subtle animations for a smooth user experience. 
-Target Audience of Web Application	Anyone who wants quick, easy access to accurate weather information, especially travelers, students and everyday users planning their day around weather conditions.
-Features and Functionalities	Search bar to look up weather by city name
-Fetches live data from a weather API
-Displays temperature, description, humidity and wind speed
-Option to “Save Favorite Cities” for easy access later
-Drop-down to switch between °F and °C
-Responsive layout for mobile and desktop
-Animated background that changes based on weather conditions
-Accessible design with labeled inputs and good color contrast
-Project Requirements Questionnaire
-What will the detailed form be used for? What other forms might you need?	The detailed form will be used for users to enter and submit a city name to search for weather data. Another simple form may allow users to add a custom nickname or notes for their saved favorite cities. Both forms will include input validation.
-What data would you need to store in Local storage for persistence?	A list of the user’s favorite cities
-Their temperature preference
-The last city searched so it automatically reloads next time they open the app
-What data will your app need? Is there an API or will you need to build your own dataset in a json file?	The app will use a live weather API, such as OpenWeatherMap, to pull weather data like temperature, humidity, and forecast details. A small backup JSON file may be created for offline testing with sample weather data.
-Where would it make sense to use a drop-down menu or modal?	A drop-down menu will let users switch between °F and °C temperature units.
-A modal window could display more detailed information such as a 5-day forecast or a quick “About” section explaining how to use the app.
-Where are opportunities to use CSS Animations?	Background transitions that change based on weather.
-Smooth fade-in effects when new weather results appear.
-Animated icons for weather types.
-Button hover effects and transitions for an interactive feel. 
+Atmos is a modern weather web application designed to provide users with a clean, responsive, and interactive experience. The purpose of this project is to demonstrate mastery of key front-end web development skills, including validated forms, API integration, responsive layouts, modular JavaScript, CSS animation, accessibility, and persistent data storage. The site allows users to search for real-time weather information using either a city name or ZIP code, and it displays current conditions, a 24-hour forecast, and a full 7-day outlook. All weather information is fetched from WeatherAPI.com, ensuring accurate and up-to-date results.
 
+The application includes several important features that improve usability and engagement. Users can save favorite cities, which are stored in localStorage so they persist across sessions. A temperature unit toggle allows visitors to switch between Fahrenheit and Celsius, and their preference is also saved. The site contains a fully validated contact form, complete with error handling and a confirmation message. Navigation includes a dropdown list for favorites, a detailed About page, and a dedicated Contact page. Every page is styled with a unified design system using CSS variables, spacing tokens, and consistent layout structure. Subtle animations, gradient effects, and fade-ins give the interface a polished feel.
 
-WDD 231 Team Project Part 2
-Checkpoint
-By the end of this unit (Unit 3) it is recommended that you have most of the HTML and CSS written for your application. In order to meet this checkpoint it is recommended that you use static content hard coded into the HTML. You should make note of where you will need to switch that out for dynamically generated markup later.
-What’s already satisfied vs coming soon
+Atmos also includes a small weather-themed game tucked into the site for users to discover on their own. Have fun finding it. The entire application is built using ES modules for organization, including separate files for API communication, UI rendering, localStorage helpers, and main application logic. The layout is responsive across desktop and mobile devices and follows accessibility best practices, including meaningful semantic HTML, ARIA attributes, and readable contrast.
 
-✅ Drop-down menu (units)
-
-✅ CSS animation (fadeIn)
-
-✅ Responsive design (grid, media, fluid layout)
-
-✅ Good UX & accessibility (labels, contrast, focus, semantics)
-
-✅ URL parameters (design) – sample link index.html?city=Rexburg and card link pattern
-
-🕒 Detailed validated form (logic in JS) – HTML scaffold is present now
-
-🕒 Local storage – helpers stubbed in storage.js
-
-🕒 Fetching data (API/json) – stubbed in api.js
-
-🕒 Modules for organization – structure in place (main/api/storage/ui)
-
-Netlify 
-https://atmossearch.netlify.app/
+This project reflects strong understanding of the concepts taught throughout the course. It demonstrates practical skill in building a complete, functioning application from start to finish, including planning, implementation, debugging, and refinement. Through this work, we gained experience in structuring larger projects, improving user experience, and integrating external data sources. Atmos serves as a showcase of our collaborative effort and our ability to apply course topics in a real-world context.

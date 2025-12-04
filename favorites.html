@@ -4,58 +4,52 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Favorites – Atmos</title>
-  <!-- favicon -->
+
   <link rel="icon" type="image/png" href="ATMOS_favicon.png" />
-  <!-- Shared styles -->
   <link rel="stylesheet" href="css/base.css"/>
-  <!-- Favorites page layout -->
   <link rel="stylesheet" href="css/favorites.css"/>
 </head>
 <body>
   <header>
     <nav class="navbar" aria-label="Primary">
-      <a class="logo" href="index.html">Atmos</a>
+      <!-- LOGO NOW GOES TO GAME -->
+      <a class="logo" href="game.html">Atmos</a>
 
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a class="active" href="favorites.html">Favorites</a></li>
-        <li><a href="about.html">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
 
-     <div class="unit-toggle">
-    <input type="checkbox" id="unit-toggle-input">
-    <label for="unit-toggle-input" class="unit-toggle-label">
-      <span class="unit-option unit-f">°F</span>
-      <span class="toggle-thumb"></span>
-      <span class="unit-option unit-c">°C</span>
-    </label>
-  </div>   
-    </nav>
+      <div class="unit-toggle">
+        <input type="checkbox" id="unit-toggle-input">
+        <label for="unit-toggle-input" class="unit-toggle-label">
+          <span class="unit-option unit-f">°F</span>
+          <span class="toggle-thumb"></span>
+          <span class="unit-option unit-c">°C</span>
+        </label>
+      </div>
     </nav>
   </header>
 
   <main>
     <section class="hero">
-     <h1>Your Favorite Cities</h1>
-    <p class="sub">Save your favorite cities here!</p>
+      <h1>Your Favorite Cities</h1>
+      <p class="sub">Save your favorite locations for quick access.</p>
     </section>
-    <section class="favorites">
-      <!-- <h1>Your Favorite Cities</h1> -->
 
-      <!-- This list is built dynamically from localStorage by main.js -->
+    <section class="favorites">
       <ul class="fav-grid">
-        <!-- JS will populate with <li class="fav-card"> items -->
+        <!-- JS will populate -->
       </ul>
     </section>
   </main>
 
   <footer>
-    <p>
-      © 2025 Atmos | Built by Elora Mathias &amp; Bryan Stauch • United States
-    </p>
+    <p>© 2025 Atmos | Built by Elora Mathias &amp; Bryan Stauch • United States</p>
   </footer>
 
-  <!-- Use same JS entry. It detects if it's on favorites page via .fav-grid. -->
   <script type="module" src="js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,19 @@
+/* about.css — Clean & Balanced */
+
+.about-section {
+  max-width: 800px;
+  margin: var(--space-7) auto var(--space-7);
+  padding: var(--space-6);
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  line-height: 1.65;
+}
+
+.about-section h1 {
+  margin-bottom: var(--space-4);
+}
+
+.about-section p + p {
+  margin-top: var(--space-3);
+}

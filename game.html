@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Storm Dodge – Atmos</title>
+
+  <link rel="icon" type="image/png" href="ATMOS_favicon.png" />
+
+  <!-- Shared styles -->
+  <link rel="stylesheet" href="css/base.css"/>
+  <!-- Game-specific styles -->
+  <link rel="stylesheet" href="css/game.css"/>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar" aria-label="Primary">
+      <!-- ATMOS logo now always goes to the game -->
+      <a class="logo" href="game.html">Atmos</a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="nav-fav-dropdown">
+          <button id="fav-dropdown-btn" class="fav-drop-btn">Favorites</button>
+          <ul id="fav-dropdown-menu" class="fav-dropdown-menu">
+            <li class="empty-msg">No Favorites Yet</li>
+          </ul>
+        </li>
+
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="unit-toggle">
+        <input type="checkbox" id="unit-toggle-input">
+        <label for="unit-toggle-input" class="unit-toggle-label">
+          <span class="unit-option unit-f">°F</span>
+          <span class="toggle-thumb"></span>
+          <span class="unit-option unit-c">°C</span>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Cute hero header -->
+    <section class="hero">
+      <h1>Storm Dodge</h1>
+      <p class="sub">
+        Move your umbrella and dodge the raindrops as long as you can!
+      </p>
+    </section>
+
+    <section class="game-wrapper">
+      <div class="game-panel fade-in">
+        <div class="game-info">
+          <p><strong>Controls:</strong> Use <span>←</span> and <span>→</span> arrow keys to move.</p>
+          <p>Stay dry, dodge the storm, and beat your best score!</p>
+        </div>
+
+        <div class="canvas-container">
+          <canvas id="gameCanvas" width="400" height="500" aria-label="Storm Dodge game"></canvas>
+        </div>
+
+        <div class="scoreboard">
+          <p>Score: <span id="score">0</span></p>
+          <p>Best: <span id="bestScore">0</span></p>
+        </div>
+
+        <!-- Overlay for start & game over -->
+        <div id="overlay" class="overlay">
+          <div class="overlay-content">
+            <h2 id="overlay-title">Storm Dodge</h2>
+            <p id="overlay-message">
+              Use the arrow keys to move the umbrella and dodge the raindrops.
+            </p>
+            <button id="startBtn" class="btn">Start Game</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Atmos | Built by Elora Mathias &amp; Bryan Stauch • United States</p>
+  </footer>
+
+  <!-- Main JS for navbar favorites / units -->
+  <script type="module" src="js/main.js"></script>
+  <!-- Game logic -->
+  <script src="js/game.js"></script>
+</body>
+</html>

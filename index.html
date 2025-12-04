@@ -4,99 +4,105 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Atmos – Weather Tracker</title>
-  <!-- favicon -->
+
   <link rel="icon" type="image/png" href="ATMOS_favicon.png" />
-  <!-- Base shared styles (variables, layout, header, footer, animations) -->
   <link rel="stylesheet" href="css/base.css"/>
-  <!-- Page–specific styles for the home page -->
   <link rel="stylesheet" href="css/home.css"/>
 </head>
+
 <body>
+
+  <!-- FLOATING DID YOU KNOW BADGE -->
+  <div id="didyouknow-badge">
+    <strong>🌤️ Did You Know?</strong>
+    <div id="didyouknow-text" style="margin-top: 0.35rem"></div>
+  </div>
+
   <header>
     <nav class="navbar" aria-label="Primary">
-      <!-- Logo that links to the home page -->
-      <a class="logo" href="index.html">Atmos</a>
+      <a class="logo" href="game.html">Atmos</a>
 
-      <!-- Main navigation links -->
       <ul class="nav-links">
         <li><a class="active" href="index.html">Home</a></li>
-        <!-- <li><a href="favorites.html">Favorites</a></li> disabling link, making it a drop down list of the favortites -->
-          <li class="nav-fav-dropdown">
-              <button id="fav-dropdown-btn" class="fav-drop-btn">
-                Favorites
-              </button>
-              <ul id="fav-dropdown-menu" class="fav-dropdown-menu">
-                <li class="empty-msg">No Favorites Yet</li>
-              </ul>
-          </li>
-        <li><a href="about.html">Contact</a></li>
+
+        <li class="nav-fav-dropdown">
+          <button id="fav-dropdown-btn" class="fav-drop-btn">Favorites</button>
+          <ul id="fav-dropdown-menu" class="fav-dropdown-menu">
+            <li class="empty-msg">No Favorites Yet</li>
+          </ul>
+        </li>
+
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
 
-  <div class="unit-toggle">
-    <input type="checkbox" id="unit-toggle-input">
-    <label for="unit-toggle-input" class="unit-toggle-label">
-      <span class="unit-option unit-f">°F</span>
-      <span class="toggle-thumb"></span>
-      <span class="unit-option unit-c">°C</span>
-    </label>
-  </div>   
+      <div class="unit-toggle">
+        <input type="checkbox" id="unit-toggle-input">
+        <label for="unit-toggle-input" class="unit-toggle-label">
+          <span class="unit-option unit-f">°F</span>
+          <span class="toggle-thumb"></span>
+          <span class="unit-option unit-c">°C</span>
+        </label>
+      </div>
     </nav>
+  </header>
 
   <main id="main">
-    <!-- Hero section with title and short tagline -->
+
     <section class="hero">
       <h1>Check the Weather</h1>
       <p class="sub">Fast, clear, and friendly forecasts.</p>
     </section>
 
-    <!-- Detailed form for searching weather by city -->
-    <section class="search-section" aria-labelledby="search-heading">
-      <h2 id="search-heading">Search by City</h2>
+    <!-- RESTORED SEARCH BOX -->
+    <section class="search-section">
+      <div class="search-card">
+        <h2 class="search-title">Search by City or ZIP</h2>
 
-      <!--
-        This form is validated in JS (main.js).
-        For now it just prevents submit if invalid and then calls the API when valid.
-      -->
-      <form id="weather-form" novalidate>
-        <div class="form-row">
-          <label for="city">
-            City Name <span aria-hidden="true">*</span>
-          </label>
+        <form id="weather-form" novalidate>
+          <div class="form-row">
+            <label for="city">City or ZIP *</label>
 
-          <!-- City text input (validated for non-empty and allowed characters) -->
-          <input id="city"
-                 name="city"
-                 type="text"
-                 required
-                 placeholder="e.g., Rexburg"
-                 aria-describedby="city-help city-error" />
+            <!-- Autocomplete wrapper -->
+            <div class="autocomplete">
+              <input id="city"
+                     name="city"
+                     type="text"
+                     required
+                     placeholder="e.g., Rexburg or 83440"
+                     aria-describedby="city-help city-error" />
+              <ul id="city-suggestions" class="suggestions-list"></ul>
+            </div>
 
-          <small id="city-help">
-            Enter a valid city name (letters, spaces, commas, and hyphens).
-          </small>
+            <small id="city-help">Enter a valid city or ZIP code.</small>
+            <span id="city-error" class="error-message"></span>
+          </div>
 
-          <!-- Error messages from JS will appear here -->
-          <span id="city-error" class="error-message" aria-live="assertive"></span>
-        </div>
-
-        <button type="submit" class="btn">Search</button>
-      </form>
+          <button type="submit" class="btn search-btn">Search</button>
+        </form>
+      </div>
     </section>
 
-    <!-- Weather results area (filled dynamically by ui.js / main.js) -->
-    <section class="weather-results" aria-labelledby="results-heading">
-      <h2 id="results-heading" class="sr-only">Results</h2>
-      <!-- Initially empty; JS will inject a .weather-card article here -->
+    <!-- Weather layout -->
+    <section class="weather-layout">
+      <section class="weather-results"></section>
+
+      <section id="hourly-forecast" class="forecast-panel">
+        <h2>Next 24 Hours</h2>
+        <div class="hourly-scroll"></div>
+      </section>
+
+      <section id="weekly-forecast" class="forecast-panel">
+        <h2>7-Day Outlook</h2>
+        <div class="weekly-grid"></div>
+      </section>
     </section>
   </main>
 
   <footer>
-    <p>
-      © 2025 Atmos | Built by Elora Mathias &amp; Bryan Stauch • United States
-    </p>
+    <p>© 2025 Atmos | Built by Elora Mathias &amp; Bryan Stauch • United States</p>
   </footer>
 
-  <!-- Single JavaScript entry point for the app. Uses ES modules. -->
   <script type="module" src="js/main.js"></script>
 </body>
 </html>

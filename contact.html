@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact – Atmos</title>
+
+  <link rel="icon" type="image/png" href="ATMOS_favicon.png" />
+  <link rel="stylesheet" href="css/base.css"/>
+  <link rel="stylesheet" href="css/contact.css"/>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar" aria-label="Primary">
+      <!-- LOGO NOW GOES TO GAME -->
+      <a class="logo" href="game.html">Atmos</a>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+
+        <li class="nav-fav-dropdown">
+          <button id="fav-dropdown-btn" class="fav-drop-btn">Favorites</button>
+          <ul id="fav-dropdown-menu" class="fav-dropdown-menu">
+            <li class="empty-msg">No Favorites Yet</li>
+          </ul>
+        </li>
+
+        <li><a href="about.html">About</a></li>
+        <li><a class="active" href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="unit-toggle">
+        <input type="checkbox" id="unit-toggle-input">
+        <label for="unit-toggle-input" class="unit-toggle-label">
+          <span class="unit-option unit-f">°F</span>
+          <span class="toggle-thumb"></span>
+          <span class="unit-option unit-c">°C</span>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Contact Atmos</h1>
+      <p class="sub">
+        Have a question or suggestion? We’d love to hear from you!
+      </p>
+    </section>
+
+    <section class="contact-card">
+      <form id="contact-form" novalidate>
+        <div class="form-row">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" required placeholder="you@example.com">
+          <span id="emailError" class="error-message"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="message">Your Message *</label>
+          <textarea id="message" name="message" required placeholder="Write your comment here..."></textarea>
+          <span id="messageError" class="error-message"></span>
+        </div>
+
+        <button type="submit" class="btn">Submit</button>
+      </form>
+
+      <div id="success" class="success-message">
+        ✅ Thank you! Someone from the Atmos team will reach out shortly.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Atmos | Built by Elora Mathias &amp; Bryan Stauch • United States</p>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById('contact-form');
+      const emailInput = document.getElementById('email');
+      const messageInput = document.getElementById('message');
+      const emailError = document.getElementById('emailError');
+      const messageError = document.getElementById('messageError');
+      const successMsg = document.getElementById('success');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        let valid = true;
+        emailError.textContent = "";
+        messageError.textContent = "";
+
+        const email = emailInput.value.trim();
+        const msg = messageInput.value.trim();
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+          emailError.textContent = "Please enter a valid email address.";
+          valid = false;
+        }
+
+        if (msg.length < 5) {
+          messageError.textContent = "Please enter at least 5 characters.";
+          valid = false;
+        }
+
+        if (valid) {
+          emailInput.value = "";
+          messageInput.value = "";
+          successMsg.classList.add("show");
+
+          setTimeout(() => successMsg.classList.remove("show"), 5000);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

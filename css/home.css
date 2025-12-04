@@ -1,144 +1,150 @@
 /* home.css
-   Layout and styling for the home page main content.
+   Centered layout + restored search box + fact panel + floating badge
 */
 
+/* -------------------------
+   FLOATING DID YOU KNOW BADGE
+------------------------- */
 
-/* Search section with form */
+#didyouknow-badge {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--primary);
+  color: #fff;
+  padding: 1rem 1.25rem;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  max-width: 240px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  z-index: 2000;
+  transition: transform 0.2s ease;
+}
+
+#didyouknow-badge:hover {
+  transform: scale(1.05);
+}
+
+#didyouknow-badge.pop {
+  transform: scale(1.15);
+}
+
+/* -------------------------
+   RESTORED SEARCH CARD
+------------------------- */
+
 .search-section {
   max-width: 700px;
-  margin: 2rem auto;
-  padding: 0 1rem 2rem;
+  margin: 3rem auto;
+  padding: 0 1rem;
 }
 
-/* Use CSS grid for the form: label/input full width, button on right on larger screens */
-#weather-form {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.75rem;
+.search-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  text-align: center;
 }
 
-/* Make the form row (label + input) span full width */
-#weather-form .form-row {
-  grid-column: 1 / -1;
+.search-title {
+  margin-bottom: 1rem;
 }
 
-/* Place the button in the second column on larger screens */
-#weather-form .btn {
-  grid-column: 2;
+.autocomplete input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius);
+  font-size: 1rem;
 }
 
-/* Weather results area centered on page */
+.search-btn {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+/* -------------------------
+   FACT PANEL
+------------------------- */
+
+.fact-panel {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-top: 2rem;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.fact-title {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+/* -------------------------
+   WEATHER LAYOUT
+------------------------- */
+
+.weather-layout {
+  max-width: 900px;
+  margin: 2rem auto 4rem;
+  padding: 0 1rem;
+  text-align: center;
+}
+
 .weather-results {
-  display: flex; /* BCS - previously grid */
-  /* BCS - removed: place-items: center;  */
-  justify-content: center; /* BCS - added - edits for more "centered-look" */
-  padding: 1.25rem 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
-/* Weather card styling (main panel for results) */
+/* Panels */
+.forecast-panel {
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: var(--radius);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow);
+}
+
+.hourly-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+}
+
+.hour-card {
+  min-width: 80px;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.weekly-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.day-card {
+  background: #fff;
+  padding: 1.25rem;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+/* -------------------------
+   WEATHER CARD
+------------------------- */
+
 .weather-card {
   width: 100%;
   max-width: 380px;
   background: var(--surface);
   border-radius: var(--radius);
+  padding: 2rem;
   box-shadow: var(--shadow);
-  padding: 1rem 1.25rem;
-  animation: fadeIn 0.6s ease;
 }
-
-/* Header of the card: city name + updated time */
-.card-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 0.5rem;
-}
-
-.city-name {
-  margin: 0;
-  font-size: 1.15rem;
-}
-
-.city-name .card-link {
-  color: inherit;
-  text-decoration: none;
-  border-bottom: 1px dashed transparent;
-}
-
-.city-name .card-link:hover {
-  border-color: currentColor;
-}
-
-.timestamp {
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-/* Temperature row: big temp + condition text */
-.temp-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 0.35rem 0 0;
-}
-
-.temp {
-  font-size: 2.25rem;
-  font-weight: 800;
-}
-
-.desc {
-  color: var(--muted);
-}
-
-/* Meta info (humidity, wind) */
-.meta {
-  list-style: none;
-  padding: 0;
-  margin: 0.5rem 0 1rem;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-/* Card actions: Save/Remove buttons */
-.weather-card .card-actions {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-/* Background color variations based on rough condition groups */
-.sunny {
-  background: linear-gradient(180deg, #fde68a, #fcd34d);
-}
-
-.cloudy {
-  background: linear-gradient(180deg, #e5e7eb, #cbd5e1);
-}
-
-.rainy {
-  background: linear-gradient(180deg, #bfdbfe, #93c5fd);
-}
-
-.snowy {
-  background: linear-gradient(180deg, #e0f2fe, #f9fafb);
-}
-
-/* Mobile tweaks */
-@media (max-width: 600px) {
-  #weather-form {
-    grid-template-columns: 1fr;
-  }
-
-  #weather-form .btn {
-    grid-column: 1;
-    justify-self: start;
-    width: auto;
-    max-width: 100%;
-  }
-}
-
-
-
-
