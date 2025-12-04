@@ -316,14 +316,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Close dropdown when clicking anywhere outside menu or button (for mobile + desktop)
-document.addEventListener('click', (e) => {
-  if (
-    !e.target.closest('#fav-dropdown-btn') &&
-    !e.target.closest('#fav-dropdown-menu')
-  ) {
-    favDropdownMenu.classList.remove('show');
-  }
-});
+
+
 
   // Click inside dropdown
   favDropdownMenu.addEventListener('click', (e) => {
