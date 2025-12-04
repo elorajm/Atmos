@@ -61,14 +61,52 @@ function getCurrentUnit() {
 }
 
 if (unitToggle) {
-  const savedUnit = loadUnit() || "metric";  // default to metric (°C)
+  const savedUnit = loadUnit();
   unitToggle.checked = savedUnit === "metric";
 
   unitToggle.addEventListener("change", () => {
     const newUnit = unitToggle.checked ? "metric" : "imperial";
     saveUnit(newUnit);
+    let city = null;
+if (unitToggle) {
+  const savedUnit = loadUnit();
+  unitToggle.checked = savedUnit === "metric";
+
+// Try to figure out what city is currently in view
+    // 1) If there is a weather card on the page, read city from its link (?city=...)
+    // 2) Fallback: use whatever is in the input box
+    // If we have a city, re-fetch with the new unit
+
+  unitToggle.addEventListener("change", () => {
+    const newUnit = unitToggle.checked ? "metric" : "imperial";
+    saveUnit(newUnit);
+    let city = null;
+    const currentCityLink = document.querySelector('.weather-card .city-name .card-link');
+    if (currentCityLink) {const url = new URL(currentCityLink.href); city = url.searchParams.get('city');} //use the city being displayed on the card
+        if (city) {fetchAndDisplayWeather(city, newUnit);} //if there is a city loaded, it will reload the city with the new unit
   });
 }
+    // 1) If there is a weather card on the page, read city from its link (?city=...)
+    const currentCityLink = document.querySelector('.weather-card .city-name .card-link');
+    if (currentCityLink) {
+      const url = new URL(currentCityLink.href);
+      city = url.searchParams.get('city');
+    }
+
+    // 2) Fallback: use whatever is in the input box
+    if (!city && cityInput && cityInput.value.trim()) {
+      city = cityInput.value.trim();
+    }
+
+    // If we have a city, re-fetch with the new unit
+    if (city) {
+      fetchAndDisplayWeather(city, newUnit);
+    }
+  });
+}
+    
+
+    
 
 /**
  * Initialize unit dropdown from localStorage and listen for changes.

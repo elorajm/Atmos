@@ -151,8 +151,8 @@ header {
 
 .unit-toggle {
   position: relative;
-  width: 72px;
-  height: 27px;
+  width: 60px;
+  height: 29px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -179,23 +179,25 @@ header {
 }
 
 .unit-option {
-  width: 33%;
+  width: 100%;
   text-align: center;
   pointer-events: none;
+  font-size: 0.8rem;
 }
 
 .toggle-thumb {
   position: absolute;
-  width: 32px;
+  width: 29px;
   height: 21px;
   background: #38bdf8;
   border-radius: 14px;
   transition: transform 0.25s ease;
   left: 3px;
+  opacity: 50%;
 }
 
 #unit-toggle-input:checked + .unit-toggle-label .toggle-thumb {
-  transform: translateX(37px);
+  transform: translateX(26px);
 }
 
 /* Small screens */
