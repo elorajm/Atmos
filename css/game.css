@@ -99,13 +99,73 @@
   background: #22c55e;
 }
 
-/* Mobile tweaks */
-@media (max-width: 500px) {
+/* ------------------------------------------------------------
+   MOBILE TOUCH CONTROLS
+------------------------------------------------------------ */
+
+.mobile-controls {
+  display: none; /* Hidden on desktop */
+  margin: 1.5rem auto;
+  max-width: 500px;
+  text-align: center;
+}
+
+.mobile-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.game-btn {
+  background: #1e3a8a;
+  color: white;
+  border: none;
+  padding: 1rem 1.4rem;
+  font-size: 1.6rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  cursor: pointer;
+  min-width: 70px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.game-btn:active {
+  background: #3b82f6;
+  transform: scale(0.95);
+}
+
+.action-btn {
+  font-size: 1.2rem;
+  padding: 0.9rem 2rem;
+  background: #2563eb;
+}
+
+/* Only show on screens smaller than 768px */
+@media (max-width: 768px) {
+  .mobile-controls {
+    display: block;
+  }
+
+  /* Slightly tighter layout for small screens */
   .game-panel {
     padding: 1.25rem 1.25rem 1.75rem;
   }
+
   #gameCanvas {
     width: 100%;
     height: auto;
+  }
+}
+
+/* Extra-small devices */
+@media (max-width: 420px) {
+  .game-btn {
+    min-width: 55px;
+    padding: 0.8rem 1rem;
+    font-size: 1.3rem;
+  }
+  .action-btn {
+    font-size: 1rem;
   }
 }

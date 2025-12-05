@@ -11,6 +11,11 @@ const overlayTitle = document.getElementById('overlay-title');
 const overlayMessage = document.getElementById('overlay-message');
 const startBtn = document.getElementById('startBtn');
 
+// MOBILE control buttons
+const mobileLeft = document.getElementById("mobile-left");
+const mobileRight = document.getElementById("mobile-right");
+const mobileStart = document.getElementById("mobile-start");
+
 // Game state
 let player;
 let raindrops = [];
@@ -26,7 +31,7 @@ const keys = {
   ArrowRight: false,
 };
 
-// Load best score from localStorage if present
+// Load best score
 try {
   const storedBest = localStorage.getItem('atmos:stormdodge:best');
   if (storedBest) {
@@ -37,7 +42,7 @@ try {
   // ignore
 }
 
-// Player object – cute umbrella near the bottom
+// Create player
 function createPlayer() {
   const width = 60;
   const height = 20;
@@ -46,18 +51,18 @@ function createPlayer() {
     y: canvas.height - 60,
     width,
     height,
-    speed: 260, // pixels/second
+    speed: 260,
   };
 }
 
-// Raindrop factory
+// Raindrop generator
 function createRaindrop() {
   const size = 12 + Math.random() * 10;
   return {
     x: Math.random() * (canvas.width - size),
     y: -size,
     radius: size / 2,
-    speed: 120 + Math.random() * 120, // fall speed
+    speed: 120 + Math.random() * 120,
   };
 }
 
@@ -70,24 +75,19 @@ function resetGame() {
   lastTime = 0;
 }
 
-// Drawing helpers
-function drawBackground() {
-  // Nice gradient "storm" sky is already in CSS, so here we just add subtle stars/cloud blur if desired later.
-}
+// Drawing functions
+function drawBackground() {}
 
 function drawPlayer() {
-  // Umbrella handle
   ctx.save();
   ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
 
-  // Umbrella top
   const umbrellaRadius = player.width / 1.2;
   ctx.beginPath();
   ctx.arc(0, 0, umbrellaRadius, Math.PI, 2 * Math.PI);
-  ctx.fillStyle = '#f97316'; // orange
+  ctx.fillStyle = '#f97316';
   ctx.fill();
 
-  // Umbrella scallops
   const scallops = 4;
   for (let i = 0; i < scallops; i++) {
     const angle = Math.PI + (i * Math.PI) / scallops;
@@ -103,7 +103,6 @@ function drawPlayer() {
     ctx.fill();
   }
 
-  // Handle
   ctx.beginPath();
   ctx.moveTo(0, 0);
   ctx.lineTo(0, 30);
@@ -111,7 +110,6 @@ function drawPlayer() {
   ctx.lineWidth = 4;
   ctx.stroke();
 
-  // Handle hook
   ctx.beginPath();
   ctx.arc(6, 30, 6, Math.PI / 2, (3 * Math.PI) / 2, true);
   ctx.stroke();
@@ -141,14 +139,9 @@ function drawRaindrop(drop) {
 }
 
 function updatePlayer(dt) {
-  if (keys.ArrowLeft) {
-    player.x -= player.speed * dt;
-  }
-  if (keys.ArrowRight) {
-    player.x += player.speed * dt;
-  }
+  if (keys.ArrowLeft) player.x -= player.speed * dt;
+  if (keys.ArrowRight) player.x += player.speed * dt;
 
-  // Clamp within canvas
   if (player.x < 0) player.x = 0;
   if (player.x + player.width > canvas.width) {
     player.x = canvas.width - player.width;
@@ -157,8 +150,6 @@ function updatePlayer(dt) {
 
 function updateRaindrops(dt) {
   spawnTimer += dt;
-
-  // Spawn faster over time
   const spawnInterval = Math.max(0.35, 0.9 - score / 3000);
 
   if (spawnTimer >= spawnInterval) {
@@ -166,19 +157,17 @@ function updateRaindrops(dt) {
     spawnTimer = 0;
   }
 
-  // Move drops
   raindrops.forEach((drop) => {
     drop.y += drop.speed * dt;
   });
 
-  // Remove off-screen drops
   raindrops = raindrops.filter((drop) => drop.y - drop.radius <= canvas.height + 10);
 }
 
 function checkCollisions() {
   for (const drop of raindrops) {
     const dx = (drop.x + drop.radius) - (player.x + player.width / 2);
-    const dy = (drop.y + drop.radius) - (player.y);
+    const dy = (drop.y + drop.radius) - player.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
 
     if (dist < drop.radius + 18) {
@@ -189,7 +178,7 @@ function checkCollisions() {
 }
 
 function updateScore(dt) {
-  score += dt * 100; // points per second
+  score += dt * 100;
   const displayScore = Math.floor(score);
   scoreEl.textContent = displayScore;
 
@@ -198,13 +187,10 @@ function updateScore(dt) {
     bestScoreEl.textContent = bestScore;
     try {
       localStorage.setItem('atmos:stormdodge:best', String(bestScore));
-    } catch (_) {
-      // ignore
-    }
+    } catch (_) {}
   }
 }
 
-// Game loop
 function gameLoop(timestamp) {
   if (!gameRunning) return;
 
@@ -219,7 +205,6 @@ function gameLoop(timestamp) {
   checkCollisions();
   updateScore(dt);
 
-  // Draw
   drawPlayer();
   raindrops.forEach(drawRaindrop);
 
@@ -230,38 +215,71 @@ function startGame() {
   resetGame();
   gameRunning = true;
   overlay.style.display = 'none';
+  if (mobileStart) mobileStart.disabled = true;
   requestAnimationFrame(gameLoop);
 }
 
 function endGame() {
   gameRunning = false;
+
   overlayTitle.textContent = 'Game Over';
-  overlayMessage.textContent = `You scored ${Math.floor(
-    score
-  )} points. Can you dodge the storm even longer?`;
+  overlayMessage.textContent = `You scored ${Math.floor(score)} points!`;
   startBtn.textContent = 'Play Again';
   overlay.style.display = 'flex';
+
+  if (mobileStart) mobileStart.disabled = false;
+
+  keys.ArrowLeft = false;
+  keys.ArrowRight = false;
 }
 
-// Event listeners
+// Desktop key controls
 window.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-    keys[e.key] = true;
-  }
+  if (e.key in keys) keys[e.key] = true;
 });
 
 window.addEventListener('keyup', (e) => {
-  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-    keys[e.key] = false;
-  }
+  if (e.key in keys) keys[e.key] = false;
 });
 
+// Desktop start button
 startBtn.addEventListener('click', () => {
   overlayTitle.textContent = 'Storm Dodge';
-  overlayMessage.textContent =
-    'Use the arrow keys to move the umbrella and dodge the raindrops.';
+  overlayMessage.textContent = 'Use arrows or mobile buttons to dodge raindrops!';
   startGame();
 });
+
+// ------------------------------------------------------------
+// MOBILE TOUCH CONTROLS
+// ------------------------------------------------------------
+
+if (mobileLeft && mobileRight) {
+  // Hold left
+  mobileLeft.addEventListener("touchstart", () => {
+    if (gameRunning) keys.ArrowLeft = true;
+  });
+
+  mobileLeft.addEventListener("touchend", () => {
+    keys.ArrowLeft = false;
+  });
+
+  // Hold right
+  mobileRight.addEventListener("touchstart", () => {
+    if (gameRunning) keys.ArrowRight = true;
+  });
+
+  mobileRight.addEventListener("touchend", () => {
+    keys.ArrowRight = false;
+  });
+}
+
+// Mobile start button
+if (mobileStart) {
+  mobileStart.addEventListener("click", () => {
+    overlay.style.display = "none";
+    startGame();
+  });
+}
 
 // Initialize
 resetGame();
