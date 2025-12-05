@@ -1,6 +1,4 @@
-/* game.css
-   Storm Dodge – cute cartoony weather dodge game
-*/
+/* game.css – Storm Dodge */
 
 .game-wrapper {
   max-width: 900px;
@@ -20,16 +18,16 @@
   position: relative;
 }
 
-/* Game info text */
+/* Game info */
 .game-info {
   text-align: center;
   margin-bottom: 1rem;
   font-size: 0.95rem;
   color: var(--muted);
 }
+
 .game-info span {
   display: inline-block;
-  min-width: 1.4rem;
   padding: 0.1rem 0.3rem;
   margin: 0 0.1rem;
   border-radius: 6px;
@@ -43,7 +41,7 @@
   margin-bottom: 1rem;
 }
 
-/* Canvas styling */
+/* Canvas style */
 #gameCanvas {
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
@@ -59,7 +57,7 @@
   color: var(--text);
 }
 
-/* Overlay for start & game over */
+/* Overlay */
 .overlay {
   position: absolute;
   inset: 0;
@@ -81,91 +79,44 @@
 }
 
 .overlay-content h2 {
-  margin-top: 0;
-  margin-bottom: 0.6rem;
+  margin: 0 0 0.6rem;
 }
 
 .overlay-content p {
-  margin-top: 0;
-  margin-bottom: 1.2rem;
+  margin: 0 0 1.2rem;
   font-size: 0.95rem;
 }
 
-/* Make the button stand out on dark overlay */
-.overlay .btn {
-  background: #38bdf8;
-}
-.overlay .btn:hover {
-  background: #22c55e;
-}
-
-/* ------------------------------------------------------------
-   MOBILE TOUCH CONTROLS
------------------------------------------------------------- */
-
+/* Mobile controls (hidden on desktop) */
 .mobile-controls {
-  display: none; /* Hidden on desktop */
-  margin: 1.5rem auto;
-  max-width: 500px;
-  text-align: center;
+  display: none;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem 0;
 }
 
-.mobile-row {
-  display: flex;
-  justify-content: center;
-  gap: 1.25rem;
-  margin-bottom: 1rem;
-}
-
-.game-btn {
+.mobile-btn {
+  flex: 1;
+  padding: 1rem;
+  font-size: 2rem;
+  border-radius: 12px;
+  border: none;
   background: #1e3a8a;
   color: white;
-  border: none;
-  padding: 1rem 1.4rem;
-  font-size: 1.6rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  cursor: pointer;
-  min-width: 70px;
-  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
 
-.game-btn:active {
+.mobile-btn:active {
   background: #3b82f6;
-  transform: scale(0.95);
 }
 
-.action-btn {
-  font-size: 1.2rem;
-  padding: 0.9rem 2rem;
-  background: #2563eb;
-}
-
-/* Only show on screens smaller than 768px */
-@media (max-width: 768px) {
+/* Appear ONLY on phones */
+@media (max-width: 600px) {
   .mobile-controls {
-    display: block;
+    display: flex;
   }
-
-  /* Slightly tighter layout for small screens */
-  .game-panel {
-    padding: 1.25rem 1.25rem 1.75rem;
-  }
-
   #gameCanvas {
     width: 100%;
     height: auto;
-  }
-}
-
-/* Extra-small devices */
-@media (max-width: 420px) {
-  .game-btn {
-    min-width: 55px;
-    padding: 0.8rem 1rem;
-    font-size: 1.3rem;
-  }
-  .action-btn {
-    font-size: 1rem;
   }
 }

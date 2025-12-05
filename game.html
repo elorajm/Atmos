@@ -46,21 +46,25 @@
   <main>
     <section class="hero">
       <h1>Storm Dodge</h1>
-      <p class="sub">
-        Move your umbrella and dodge the raindrops as long as you can!
-      </p>
+      <p class="sub">Move your umbrella and dodge the raindrops as long as you can!</p>
     </section>
 
     <section class="game-wrapper">
       <div class="game-panel fade-in">
-        
+
         <div class="game-info">
-          <p><strong>Controls:</strong> Use <span>←</span> and <span>→</span> arrow keys to move.</p>
-          <p>Stay dry, dodge the storm, and beat your best score!</p>
+          <p><strong>Controls:</strong> Use <span>←</span> and <span>→</span> on desktop.</p>
+          <p>On mobile, use the on-screen buttons!</p>
         </div>
 
         <div class="canvas-container">
-          <canvas id="gameCanvas" width="400" height="500" aria-label="Storm Dodge game"></canvas>
+          <canvas id="gameCanvas" width="400" height="500"></canvas>
+        </div>
+
+        <!-- MOBILE CONTROLS -->
+        <div class="mobile-controls">
+          <button id="mobile-left" class="mobile-btn">⟵</button>
+          <button id="mobile-right" class="mobile-btn">⟶</button>
         </div>
 
         <div class="scoreboard">
@@ -68,13 +72,11 @@
           <p>Best: <span id="bestScore">0</span></p>
         </div>
 
-        <!-- Overlay for start & game over -->
+        <!-- Overlay -->
         <div id="overlay" class="overlay">
           <div class="overlay-content">
             <h2 id="overlay-title">Storm Dodge</h2>
-            <p id="overlay-message">
-              Use the arrow keys to move the umbrella and dodge the raindrops.
-            </p>
+            <p id="overlay-message">Use the arrow keys or the mobile buttons to dodge the raindrops!</p>
             <button id="startBtn" class="btn">Start Game</button>
           </div>
         </div>
@@ -82,51 +84,11 @@
     </section>
   </main>
 
-  <!-- MOBILE TOUCH CONTROLS -->
-  <div class="mobile-controls">
-    <div class="mobile-row">
-      <button class="game-btn" data-dir="left">◀</button>
-      <button class="game-btn" data-dir="right">▶</button>
-    </div>
-
-    <div class="mobile-row">
-      <button id="mobileStartBtn" class="game-btn action-btn">Start</button>
-    </div>
-  </div>
-
   <footer>
     <p>© 2025 Atmos | Built by Elora Mathias &amp; Bryan Stauch • United States</p>
   </footer>
 
-  <!-- Navbar favorites / unit toggle -->
   <script type="module" src="js/main.js"></script>
-
-  <!-- Game logic -->
   <script src="js/game.js"></script>
-
-  <!-- Mobile control logic -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const leftBtn = document.querySelector('[data-dir="left"]');
-      const rightBtn = document.querySelector('[data-dir="right"]');
-      const startBtnMobile = document.getElementById("mobileStartBtn");
-
-      // These rely on your existing game.js functions:
-      // moveLeft(), moveRight(), startGame()
-
-      leftBtn.addEventListener("click", () => {
-        if (typeof moveLeft === "function") moveLeft();
-      });
-
-      rightBtn.addEventListener("click", () => {
-        if (typeof moveRight === "function") moveRight();
-      });
-
-      startBtnMobile.addEventListener("click", () => {
-        if (typeof startGame === "function") startGame();
-      });
-    });
-  </script>
-
 </body>
 </html>

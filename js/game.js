@@ -1,5 +1,4 @@
-// game.js
-// Storm Dodge – cute weather dodge game with an umbrella and falling raindrops
+// game.js – Storm Dodge
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -11,10 +10,9 @@ const overlayTitle = document.getElementById('overlay-title');
 const overlayMessage = document.getElementById('overlay-message');
 const startBtn = document.getElementById('startBtn');
 
-// MOBILE control buttons
+// Mobile buttons
 const mobileLeft = document.getElementById("mobile-left");
 const mobileRight = document.getElementById("mobile-right");
-const mobileStart = document.getElementById("mobile-start");
 
 // Game state
 let player;
@@ -25,7 +23,7 @@ let score = 0;
 let bestScore = 0;
 let gameRunning = false;
 
-// Input
+// Input keys
 const keys = {
   ArrowLeft: false,
   ArrowRight: false,
@@ -38,11 +36,9 @@ try {
     bestScore = parseInt(storedBest, 10) || 0;
     bestScoreEl.textContent = bestScore;
   }
-} catch (_) {
-  // ignore
-}
+} catch (_) {}
 
-// Create player
+// Player (umbrella)
 function createPlayer() {
   const width = 60;
   const height = 20;
@@ -55,7 +51,6 @@ function createPlayer() {
   };
 }
 
-// Raindrop generator
 function createRaindrop() {
   const size = 12 + Math.random() * 10;
   return {
@@ -70,22 +65,21 @@ function resetGame() {
   player = createPlayer();
   raindrops = [];
   score = 0;
-  scoreEl.textContent = '0';
+  scoreEl.textContent = "0";
   spawnTimer = 0;
   lastTime = 0;
 }
 
-// Drawing functions
-function drawBackground() {}
-
+// Drawing
 function drawPlayer() {
   ctx.save();
   ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
 
   const umbrellaRadius = player.width / 1.2;
+
   ctx.beginPath();
   ctx.arc(0, 0, umbrellaRadius, Math.PI, 2 * Math.PI);
-  ctx.fillStyle = '#f97316';
+  ctx.fillStyle = "#f97316";
   ctx.fill();
 
   const scallops = 4;
@@ -99,14 +93,14 @@ function drawPlayer() {
       0,
       2 * Math.PI
     );
-    ctx.fillStyle = '#fb923c';
+    ctx.fillStyle = "#fb923c";
     ctx.fill();
   }
 
   ctx.beginPath();
   ctx.moveTo(0, 0);
   ctx.lineTo(0, 30);
-  ctx.strokeStyle = '#111827';
+  ctx.strokeStyle = "#111827";
   ctx.lineWidth = 4;
   ctx.stroke();
 
@@ -118,7 +112,6 @@ function drawPlayer() {
 }
 
 function drawRaindrop(drop) {
-  ctx.save();
   ctx.beginPath();
   ctx.moveTo(drop.x + drop.radius, drop.y);
   ctx.quadraticCurveTo(
@@ -133,9 +126,8 @@ function drawRaindrop(drop) {
     drop.x + drop.radius,
     drop.y
   );
-  ctx.fillStyle = '#38bdf8';
+  ctx.fillStyle = "#38bdf8";
   ctx.fill();
-  ctx.restore();
 }
 
 function updatePlayer(dt) {
@@ -143,13 +135,13 @@ function updatePlayer(dt) {
   if (keys.ArrowRight) player.x += player.speed * dt;
 
   if (player.x < 0) player.x = 0;
-  if (player.x + player.width > canvas.width) {
+  if (player.x + player.width > canvas.width)
     player.x = canvas.width - player.width;
-  }
 }
 
 function updateRaindrops(dt) {
   spawnTimer += dt;
+
   const spawnInterval = Math.max(0.35, 0.9 - score / 3000);
 
   if (spawnTimer >= spawnInterval) {
@@ -186,7 +178,7 @@ function updateScore(dt) {
     bestScore = displayScore;
     bestScoreEl.textContent = bestScore;
     try {
-      localStorage.setItem('atmos:stormdodge:best', String(bestScore));
+      localStorage.setItem("atmos:stormdodge:best", String(bestScore));
     } catch (_) {}
   }
 }
@@ -198,7 +190,6 @@ function gameLoop(timestamp) {
   lastTime = timestamp;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawBackground();
 
   updatePlayer(dt);
   updateRaindrops(dt);
@@ -214,72 +205,57 @@ function gameLoop(timestamp) {
 function startGame() {
   resetGame();
   gameRunning = true;
-  overlay.style.display = 'none';
-  if (mobileStart) mobileStart.disabled = true;
+  overlay.style.display = "none";
   requestAnimationFrame(gameLoop);
 }
 
 function endGame() {
   gameRunning = false;
-
-  overlayTitle.textContent = 'Game Over';
-  overlayMessage.textContent = `You scored ${Math.floor(score)} points!`;
-  startBtn.textContent = 'Play Again';
-  overlay.style.display = 'flex';
-
-  if (mobileStart) mobileStart.disabled = false;
-
-  keys.ArrowLeft = false;
-  keys.ArrowRight = false;
+  overlayTitle.textContent = "Game Over";
+  overlayMessage.textContent = `You scored ${Math.floor(
+    score
+  )} points. Can you dodge the storm even longer?`;
+  startBtn.textContent = "Play Again";
+  overlay.style.display = "flex";
 }
 
-// Desktop key controls
-window.addEventListener('keydown', (e) => {
-  if (e.key in keys) keys[e.key] = true;
+// Desktop keyboard
+window.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft") keys.ArrowLeft = true;
+  if (e.key === "ArrowRight") keys.ArrowRight = true;
 });
 
-window.addEventListener('keyup', (e) => {
-  if (e.key in keys) keys[e.key] = false;
+window.addEventListener("keyup", (e) => {
+  if (e.key === "ArrowLeft") keys.ArrowLeft = false;
+  if (e.key === "ArrowRight") keys.ArrowRight = false;
 });
 
-// Desktop start button
-startBtn.addEventListener('click', () => {
-  overlayTitle.textContent = 'Storm Dodge';
-  overlayMessage.textContent = 'Use arrows or mobile buttons to dodge raindrops!';
-  startGame();
-});
-
-// ------------------------------------------------------------
-// MOBILE TOUCH CONTROLS
-// ------------------------------------------------------------
-
-if (mobileLeft && mobileRight) {
-  // Hold left
+// Mobile buttons
+if (mobileLeft) {
   mobileLeft.addEventListener("touchstart", () => {
     if (gameRunning) keys.ArrowLeft = true;
   });
-
   mobileLeft.addEventListener("touchend", () => {
     keys.ArrowLeft = false;
   });
+}
 
-  // Hold right
+if (mobileRight) {
   mobileRight.addEventListener("touchstart", () => {
     if (gameRunning) keys.ArrowRight = true;
   });
-
   mobileRight.addEventListener("touchend", () => {
     keys.ArrowRight = false;
   });
 }
 
-// Mobile start button
-if (mobileStart) {
-  mobileStart.addEventListener("click", () => {
-    overlay.style.display = "none";
-    startGame();
-  });
-}
+// Start button
+startBtn.addEventListener("click", () => {
+  overlayTitle.textContent = "Storm Dodge";
+  overlayMessage.textContent =
+    "Use the arrow keys or mobile buttons to dodge the storm!";
+  startGame();
+});
 
 // Initialize
 resetGame();
