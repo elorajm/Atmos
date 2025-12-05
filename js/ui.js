@@ -1,9 +1,6 @@
 // ui.js
-// Renders main weather card, hourly forecast, and weekly forecast
+// Renders main weather card and forecast panels
 
-/* -------------------------------------------------------
-   CLEAR PREVIOUS RESULTS
-------------------------------------------------------- */
 export function clearResults() {
   const container = document.querySelector(".weather-results");
   if (container) container.innerHTML = "";
@@ -16,9 +13,9 @@ export function clearForecastPanels() {
   if (weekly) weekly.innerHTML = "";
 }
 
-/* -------------------------------------------------------
-   TEMP & CONDITION CLASSES FOR COLOR THEMES
-------------------------------------------------------- */
+/* -----------------------------
+   TEMP GRADIENT SYSTEM
+----------------------------- */
 function getTempClass(tempF) {
   if (tempF <= 20) return "temp-extreme-cold";
   if (tempF <= 40) return "temp-cold";
@@ -30,18 +27,16 @@ function getTempClass(tempF) {
 
 function getConditionClass(descLower) {
   if (descLower.includes("snow")) return "cond-snowy";
-  if (descLower.includes("rain") || descLower.includes("drizzle"))
-    return "cond-rainy";
-  if (descLower.includes("cloud") || descLower.includes("overcast"))
-    return "cond-cloudy";
-  if (descLower.includes("sunny") || descLower.includes("clear"))
-    return "cond-sunny";
+  if (descLower.includes("rain") || descLower.includes("drizzle")) return "cond-rainy";
+  if (descLower.includes("cloud") || descLower.includes("overcast")) return "cond-cloudy";
+  if (descLower.includes("sunny") || descLower.includes("clear")) return "cond-sunny";
   return "";
 }
 
-/* -------------------------------------------------------
+/* -----------------------------
    MAIN WEATHER CARD
-------------------------------------------------------- */
+----------------------------- */
+
 export function renderWeatherCard(data, unit = "imperial", isFavorite = false) {
   const container = document.querySelector(".weather-results");
   if (!container) return;
@@ -51,18 +46,16 @@ export function renderWeatherCard(data, unit = "imperial", isFavorite = false) {
       ? `${data.location.name}, ${data.location.region}`
       : `${data.location.name}, ${data.location.country}`;
 
-  const rawTemp =
-    unit === "imperial" ? data.current.temp_f : data.current.temp_c;
+  const rawTemp = unit === "imperial" ? data.current.temp_f : data.current.temp_c;
 
-  // Convert metric to Fahrenheit so color logic is consistent
   const tempF =
-    unit === "metric" ? rawTemp * (9 / 5) + 32 : rawTemp;
+    unit === "metric"
+      ? rawTemp * 9 / 5 + 32 // convert °C → °F for gradient
+      : rawTemp;
 
   const desc = data.current.condition.text;
   const updated = data.location.localtime;
-  const datetimeAttr = updated.replace(" ", "T");
 
-  // Get theme classes
   const tempClass = getTempClass(tempF);
   const condClass = getConditionClass(desc.toLowerCase());
 
@@ -75,7 +68,7 @@ export function renderWeatherCard(data, unit = "imperial", isFavorite = false) {
           </a>
         </h3>
         <p class="timestamp">
-          Updated: <time datetime="${datetimeAttr}">${updated}</time>
+          Updated: <time datetime="${updated.replace(" ", "T")}">${updated}</time>
         </p>
       </header>
 
@@ -87,9 +80,7 @@ export function renderWeatherCard(data, unit = "imperial", isFavorite = false) {
       <ul class="meta">
         <li>Humidity: ${data.current.humidity}%</li>
         <li>Wind: ${
-          unit === "imperial"
-            ? `${data.current.wind_mph} mph`
-            : `${data.current.wind_kph} kph`
+          unit === "imperial" ? `${data.current.wind_mph} mph` : `${data.current.wind_kph} kph`
         }</li>
       </ul>
 
@@ -98,15 +89,17 @@ export function renderWeatherCard(data, unit = "imperial", isFavorite = false) {
           style="display:${isFavorite ? "none" : "inline-block"}">
           Add to Favorites
         </button>
+
         <button id="new-search-btn" class="btn secondary">New Search</button>
       </div>
     </article>
   `;
 }
 
-/* -------------------------------------------------------
+/* -----------------------------
    24-HOUR FORECAST
-------------------------------------------------------- */
+----------------------------- */
+
 export function renderHourlyForecast(data, unit = "imperial") {
   const container = document.querySelector("#hourly-forecast .hourly-scroll");
   if (!container) return;
@@ -116,14 +109,13 @@ export function renderHourlyForecast(data, unit = "imperial") {
 
   hours.forEach((hour) => {
     const temp = unit === "imperial" ? hour.temp_f : hour.temp_c;
-    const timeLabel = new Date(hour.time).toLocaleTimeString("en-US", {
-      hour: "numeric",
-    });
 
     const card = document.createElement("div");
     card.className = "hour-card";
     card.innerHTML = `
-      <span class="hour-time">${timeLabel}</span>
+      <span class="hour-time">${new Date(hour.time).toLocaleTimeString("en-US", {
+        hour: "numeric"
+      })}</span>
       <span class="hour-temp">${Math.round(temp)}°</span>
       <span class="hour-desc">${hour.condition.text}</span>
     `;
@@ -131,39 +123,27 @@ export function renderHourlyForecast(data, unit = "imperial") {
   });
 }
 
-/* -------------------------------------------------------
-   FULL 7-DAY FORECAST (Even with free API)
-------------------------------------------------------- */
+/* -----------------------------
+   2-DAY FORECAST (Tomorrow + Day After)
+----------------------------- */
+
 export function renderWeeklyForecast(data, unit = "imperial") {
   const container = document.querySelector("#weekly-forecast .weekly-grid");
   if (!container) return;
 
-  let days = data?.forecast?.forecastday || [];
   container.innerHTML = "";
 
-  // Skip TODAY
-  let future = days.slice(1);
+  const days = data?.forecast?.forecastday || [];
 
-  // If API only gives 2 days, extend to 7 artificially
-  while (future.length < 7) {
-    const last = future[future.length - 1];
-    const nextDate = new Date(last.date);
-    nextDate.setDate(nextDate.getDate() + 1);
+  // Must have at least two future days
+  const tomorrow = days[1];
+  const dayAfter = days[2];
 
-    future.push({
-      date: nextDate.toISOString().split("T")[0],
-      day: {
-        maxtemp_f: last.day.maxtemp_f,
-        mintemp_f: last.day.mintemp_f,
-        maxtemp_c: last.day.maxtemp_c,
-        mintemp_c: last.day.mintemp_c,
-        condition: { text: last.day.condition.text }
-      }
-    });
-  }
+  if (!tomorrow) return;
 
-  // Render exactly 7 days
-  future.slice(0, 7).forEach((day) => {
+  const forecastDays = [tomorrow, dayAfter].filter(Boolean);
+
+  forecastDays.forEach((day) => {
     const date = new Date(day.date);
     const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
 
@@ -174,7 +154,9 @@ export function renderWeeklyForecast(data, unit = "imperial") {
     card.className = "day-card";
 
     card.innerHTML = `
-      <div class="day-card-header">${weekday}</div>
+      <div class="day-card-header">
+        <span class="day-name">${weekday}</span>
+      </div>
       <div class="day-temps">
         <span class="high">${Math.round(hi)}°</span>
         <span class="low">${Math.round(lo)}°</span>

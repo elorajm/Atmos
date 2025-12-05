@@ -64,12 +64,19 @@ cityInput.addEventListener("input", async () => {
     }
 
     results.forEach((place) => {
+      const name = `${place.name}, ${place.region || place.country}`;
+
       const li = document.createElement("li");
-      li.textContent = `${place.name}, ${place.region || place.country}`;
-      li.addEventListener("click", () => {
-        cityInput.value = li.textContent;
+      li.textContent = name;
+
+      // ⬅⬅ INSTANT SEARCH FIX HERE
+      li.addEventListener("click", async () => {
+        cityInput.value = name;
         suggestionsList.classList.remove("show");
+
+        await fetchAndDisplayWeather(name, getCurrentUnit());
       });
+
       suggestionsList.appendChild(li);
     });
 
@@ -87,8 +94,7 @@ form.addEventListener("submit", async (event) => {
 
   if (!validateCityInput()) return;
 
-  const city = cityInput.value.trim();
-  await fetchAndDisplayWeather(city, getCurrentUnit());
+  await fetchAndDisplayWeather(cityInput.value.trim(), getCurrentUnit());
 });
 
 /* --------------------------
@@ -96,6 +102,7 @@ form.addEventListener("submit", async (event) => {
 -------------------------- */
 async function fetchAndDisplayWeather(city, unit) {
   clearResults();
+  suggestionsList.classList.remove("show");
 
   try {
     const data = await getJSONWeather(city);
@@ -195,7 +202,7 @@ favDropdownBtn.addEventListener("click", (e) => {
   favDropdownMenu.classList.toggle("show");
 });
 
-// Clicking inside menu
+// Inside menu click
 favDropdownMenu.addEventListener("click", (e) => {
   const li = e.target.closest("li");
 

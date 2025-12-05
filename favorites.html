@@ -8,48 +8,219 @@
   <link rel="icon" type="image/png" href="ATMOS_favicon.png" />
   <link rel="stylesheet" href="css/base.css"/>
   <link rel="stylesheet" href="css/favorites.css"/>
+
+  <style>
+    /* ✨ NEW — FAVORITES PAGE UPGRADES */
+
+    .fav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      padding: 1rem;
+    }
+
+    .fav-card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      transition: transform .25s ease, box-shadow .25s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .fav-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.22);
+    }
+
+    .fav-name {
+      font-weight: 700;
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+    }
+
+    .fav-remove {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #dc2626;
+      border: none;
+      color: white;
+      padding: 0.3rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .fav-remove:hover {
+      background: #b91c1c;
+    }
+
+    .fav-weather {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.3rem;
+    }
+
+    .fav-weather img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .fav-temp {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    /* Clear all button */
+    .clear-all-btn {
+      display: block;
+      margin: 1rem auto 2rem;
+      padding: 0.7rem 1.2rem;
+      background: #334155;
+      color: white;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background .2s ease;
+    }
+    .clear-all-btn:hover {
+      background: #1e293b;
+    }
+  </style>
+
 </head>
+
 <body>
-  <header>
-    <nav class="navbar" aria-label="Primary">
-      <!-- LOGO NOW GOES TO GAME -->
-      <a class="logo" href="game.html">Atmos</a>
+<header>
+  <nav class="navbar">
+    <a class="logo" href="game.html">Atmos</a>
 
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a class="active" href="favorites.html">Favorites</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a class="active" href="favorites.html">Favorites</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
 
-      <div class="unit-toggle">
-        <input type="checkbox" id="unit-toggle-input">
-        <label for="unit-toggle-input" class="unit-toggle-label">
-          <span class="unit-option unit-f">°F</span>
-          <span class="toggle-thumb"></span>
-          <span class="unit-option unit-c">°C</span>
-        </label>
-      </div>
-    </nav>
-  </header>
+    <div class="unit-toggle">
+      <input type="checkbox" id="unit-toggle-input">
+      <label for="unit-toggle-input" class="unit-toggle-label">
+        <span class="unit-option unit-f">°F</span>
+        <span class="toggle-thumb"></span>
+        <span class="unit-option unit-c">°C</span>
+      </label>
+    </div>
+  </nav>
+</header>
 
-  <main>
-    <section class="hero">
-      <h1>Your Favorite Cities</h1>
-      <p class="sub">Save your favorite locations for quick access.</p>
-    </section>
+<main>
+  <section class="hero">
+    <h1>Your Favorite Cities</h1>
+    <p class="sub">Tap any tile for current weather • Swipe to delete</p>
+  </section>
 
-    <section class="favorites">
-      <ul class="fav-grid">
-        <!-- JS will populate -->
-      </ul>
-    </section>
-  </main>
+  <button id="clearAll" class="clear-all-btn">Clear All Favorites</button>
 
-  <footer>
-    <p>© 2025 Atmos | Built by Elora Mathias &amp; Bryan Stauch • United States</p>
-  </footer>
+  <section class="favorites">
+    <ul class="fav-grid" id="favGrid"></ul>
+  </section>
+</main>
 
-  <script type="module" src="js/main.js"></script>
+<footer>
+  <p>© 2025 Atmos | Built by Elora Mathias &amp; Bryan Stauch • United States</p>
+</footer>
+
+<!-- Script -->
+<script type="module">
+  import { getFavorites, removeCityTile } from "./js/storage.js";
+  import { getJSONWeather } from "./js/api.js";
+
+  const favGrid = document.getElementById("favGrid");
+  const clearAllBtn = document.getElementById("clearAll");
+
+  async function renderFavorites() {
+    let favorites = getFavorites();
+
+    favGrid.innerHTML = "";
+
+    if (!favorites.length) {
+      favGrid.innerHTML = `<li class="empty">No favorite cities yet.</li>`;
+      return;
+    }
+
+    // ✨ Sort A → Z
+    favorites = favorites.sort((a, b) => a.localeCompare(b));
+
+    for (const city of favorites) {
+      try {
+        const data = await getJSONWeather(city);
+        const temp = Math.round(data.current.temp_f);
+        const icon = "https:" + data.current.condition.icon;
+        const condition = data.current.condition.text;
+
+        const li = document.createElement("li");
+        li.className = "fav-card";
+        li.dataset.city = city;
+
+        li.innerHTML = `
+          <button class="fav-remove" data-city="${city}">×</button>
+          <span class="fav-name">${city}</span>
+
+          <div class="fav-weather">
+            <img src="${icon}" alt="${condition}">
+            <span class="fav-temp">${temp}°F</span>
+          </div>
+
+          <p class="fav-condition">${condition}</p>
+        `;
+
+        favGrid.appendChild(li);
+      } catch {
+        // If API fails, still show name but no weather
+        const fallback = document.createElement("li");
+        fallback.className = "fav-card";
+        fallback.innerHTML = `
+          <button class="fav-remove" data-city="${city}">×</button>
+          <span class="fav-name">${city}</span>
+          <p style="opacity:.6;">Weather unavailable</p>
+        `;
+        favGrid.appendChild(fallback);
+      }
+    }
+  }
+
+  // CLICK EVENTS
+  favGrid.addEventListener("click", (e) => {
+    const removeBtn = e.target.closest(".fav-remove");
+    const tile = e.target.closest(".fav-card");
+
+    if (removeBtn) {
+      removeCityTile(removeBtn.dataset.city);
+      renderFavorites();
+      return;
+    }
+
+    if (tile) {
+      const city = tile.dataset.city;
+      window.location.href = `index.html?city=${encodeURIComponent(city)}`;
+    }
+  });
+
+  // CLEAR ALL
+  clearAllBtn.addEventListener("click", () => {
+    localStorage.removeItem("atmos:favorites");
+    renderFavorites();
+  });
+
+  // INIT
+  renderFavorites();
+</script>
+
 </body>
 </html>

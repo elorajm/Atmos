@@ -7,11 +7,18 @@
 }
 
 .fav-grid {
-  display: grid;
-  gap: var(--space-4);
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  margin-top: var(--space-5);
+  display: flex !important;          /* force flexbox */
+  flex-direction: column !important; /* force vertical stacking */
+  flex-wrap: nowrap !important;      /* do NOT wrap horizontally */
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0;
+  gap: 1.25rem;
+  list-style: none;
 }
+
+
 
 .fav-card {
   background: #fff;
