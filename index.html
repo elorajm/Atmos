@@ -12,12 +12,6 @@
 
 <body>
 
-  <!-- FLOATING DID YOU KNOW BADGE -->
-  <div id="didyouknow-badge">
-    <strong>🌤️ Did You Know?</strong>
-    <div id="didyouknow-text" style="margin-top: 0.35rem"></div>
-  </div>
-
   <header>
     <nav class="navbar" aria-label="Primary">
       <a class="logo" href="game.html">Atmos</a>
@@ -54,7 +48,7 @@
       <p class="sub">Fast, clear, and friendly forecasts.</p>
     </section>
 
-    <!-- RESTORED SEARCH BOX -->
+    <!-- SEARCH SECTION -->
     <section class="search-section">
       <div class="search-card">
         <h2 class="search-title">Search by City or ZIP</h2>
@@ -63,7 +57,6 @@
           <div class="form-row">
             <label for="city">City or ZIP *</label>
 
-            <!-- Autocomplete wrapper -->
             <div class="autocomplete">
               <input id="city"
                      name="city"
@@ -71,6 +64,7 @@
                      required
                      placeholder="e.g., Rexburg or 83440"
                      aria-describedby="city-help city-error" />
+
               <ul id="city-suggestions" class="suggestions-list"></ul>
             </div>
 
@@ -85,17 +79,22 @@
 
     <!-- Weather layout -->
     <section class="weather-layout">
+
+      <!-- Main Card -->
       <section class="weather-results"></section>
 
+      <!-- Hourly -->
       <section id="hourly-forecast" class="forecast-panel">
         <h2>Next 24 Hours</h2>
         <div class="hourly-scroll"></div>
       </section>
 
+      <!-- Weekly -->
       <section id="weekly-forecast" class="forecast-panel">
         <h2>7-Day Outlook</h2>
         <div class="weekly-grid"></div>
       </section>
+
     </section>
   </main>
 
