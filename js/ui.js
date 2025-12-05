@@ -149,6 +149,7 @@ export function renderWeeklyForecast(data, unit = "imperial") {
 
     const hi = unit === "imperial" ? day.day.maxtemp_f : day.day.maxtemp_c;
     const lo = unit === "imperial" ? day.day.mintemp_f : day.day.mintemp_c;
+    const iconUrl = day.day.condition.icon;
 
     const card = document.createElement("article");
     card.className = "day-card";
@@ -157,6 +158,7 @@ export function renderWeeklyForecast(data, unit = "imperial") {
       <div class="day-card-header">
         <span class="day-name">${weekday}</span>
       </div>
+      <img src="https:${iconUrl}" alt="${day.day.condition.text}" class="day-icon" />
       <div class="day-temps">
         <span class="high">${Math.round(hi)}°</span>
         <span class="low">${Math.round(lo)}°</span>

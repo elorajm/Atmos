@@ -101,22 +101,30 @@
   <nav class="navbar">
     <a class="logo" href="game.html">Atmos</a>
 
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a class="active" href="favorites.html">Favorites</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
+    <button class="hamburger" id="hamburger-menu" aria-label="Toggle menu" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
 
-    <div class="unit-toggle">
-      <input type="checkbox" id="unit-toggle-input">
-      <label for="unit-toggle-input" class="unit-toggle-label">
-        <span class="unit-option unit-f">°F</span>
-        <span class="toggle-thumb"></span>
-        <span class="unit-option unit-c">°C</span>
-      </label>
+    <div class="nav-container" id="nav-container">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a class="active" href="favorites.html">Favorites</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
     </div>
   </nav>
+
+  <div class="unit-toggle">
+    <input type="checkbox" id="unit-toggle-input">
+    <label for="unit-toggle-input" class="unit-toggle-label">
+      <span class="unit-option unit-f">°F</span>
+      <span class="toggle-thumb"></span>
+      <span class="unit-option unit-c">°C</span>
+    </label>
+  </div>
 </header>
 
 <main>
@@ -140,6 +148,29 @@
 <script type="module">
   import { getFavorites, removeCityTile } from "./js/storage.js";
   import { getJSONWeather } from "./js/api.js";
+
+  /* --------------------------
+     HAMBURGER MENU TOGGLE
+  -------------------------- */
+  const hamburgerMenu = document.getElementById("hamburger-menu");
+  const navContainer = document.getElementById("nav-container");
+
+  if (hamburgerMenu && navContainer) {
+    hamburgerMenu.addEventListener("click", () => {
+      hamburgerMenu.classList.toggle("active");
+      navContainer.classList.toggle("active");
+      hamburgerMenu.setAttribute("aria-expanded", hamburgerMenu.classList.contains("active"));
+    });
+
+    // Close menu when a link is clicked
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => {
+        hamburgerMenu.classList.remove("active");
+        navContainer.classList.remove("active");
+        hamburgerMenu.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
 
   const favGrid = document.getElementById("favGrid");
   const clearAllBtn = document.getElementById("clearAll");

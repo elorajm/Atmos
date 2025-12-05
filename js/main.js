@@ -27,11 +27,34 @@ const resultsWrap = document.querySelector(".weather-results");
 const favDropdownMenu = document.getElementById("fav-dropdown-menu");
 const favDropdownBtn = document.getElementById("fav-dropdown-btn");
 const suggestionsList = document.getElementById("city-suggestions");
+const hamburgerMenu = document.getElementById("hamburger-menu");
+const navContainer = document.getElementById("nav-container");
+
+/* --------------------------
+   HAMBURGER MENU TOGGLE
+-------------------------- */
+if (hamburgerMenu && navContainer) {
+  hamburgerMenu.addEventListener("click", () => {
+    hamburgerMenu.classList.toggle("active");
+    navContainer.classList.toggle("active");
+    hamburgerMenu.setAttribute("aria-expanded", hamburgerMenu.classList.contains("active"));
+  });
+
+  // Close menu when a link is clicked
+  document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+      hamburgerMenu.classList.remove("active");
+      navContainer.classList.remove("active");
+      hamburgerMenu.setAttribute("aria-expanded", "false");
+    });
+  });
+}
 
 /* --------------------------
    CITY INPUT VALIDATION
 -------------------------- */
 function validateCityInput() {
+  if (!cityError) return false;
   cityError.textContent = "";
 
   if (!cityInput.value.trim()) {
@@ -45,64 +68,70 @@ function validateCityInput() {
 /* --------------------------
    AUTOCOMPLETE SEARCH
 -------------------------- */
-cityInput.addEventListener("input", async () => {
-  const query = cityInput.value.trim();
+if (cityInput && suggestionsList) {
+  cityInput.addEventListener("input", async () => {
+    const query = cityInput.value.trim();
 
-  if (!query) {
-    suggestionsList.classList.remove("show");
-    suggestionsList.innerHTML = "";
-    return;
-  }
-
-  try {
-    const results = await searchLocations(query);
-    suggestionsList.innerHTML = "";
-
-    if (!results.length) {
+    if (!query) {
       suggestionsList.classList.remove("show");
+      suggestionsList.innerHTML = "";
       return;
     }
 
-    results.forEach((place) => {
-      const name = `${place.name}, ${place.region || place.country}`;
+    try {
+      const results = await searchLocations(query);
+      suggestionsList.innerHTML = "";
 
-      const li = document.createElement("li");
-      li.textContent = name;
-
-      // ⬅⬅ INSTANT SEARCH FIX HERE
-      li.addEventListener("click", async () => {
-        cityInput.value = name;
+      if (!results.length) {
         suggestionsList.classList.remove("show");
+        return;
+      }
 
-        await fetchAndDisplayWeather(name, getCurrentUnit());
+      results.forEach((place) => {
+        const name = `${place.name}, ${place.region || place.country}`;
+
+        const li = document.createElement("li");
+        li.textContent = name;
+
+        // ⬅⬅ INSTANT SEARCH FIX HERE
+        li.addEventListener("click", async () => {
+          cityInput.value = name;
+          suggestionsList.classList.remove("show");
+
+          await fetchAndDisplayWeather(name, getCurrentUnit());
+        });
+
+        suggestionsList.appendChild(li);
       });
 
-      suggestionsList.appendChild(li);
-    });
-
-    suggestionsList.classList.add("show");
-  } catch (err) {
-    console.error(err);
-  }
-});
+      suggestionsList.classList.add("show");
+    } catch (err) {
+      console.error(err);
+    }
+  });
+}
 
 /* --------------------------
    SEARCH FORM SUBMIT
 -------------------------- */
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+if (form) {
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  if (!validateCityInput()) return;
+    if (!validateCityInput()) return;
 
-  await fetchAndDisplayWeather(cityInput.value.trim(), getCurrentUnit());
-});
+    await fetchAndDisplayWeather(cityInput.value.trim(), getCurrentUnit());
+  });
+}
 
 /* --------------------------
    FETCH + DISPLAY WEATHER
 -------------------------- */
 async function fetchAndDisplayWeather(city, unit) {
   clearResults();
-  suggestionsList.classList.remove("show");
+  if (suggestionsList) {
+    suggestionsList.classList.remove("show");
+  }
 
   try {
     const data = await getJSONWeather(city);
@@ -116,11 +145,16 @@ async function fetchAndDisplayWeather(city, unit) {
     renderHourlyForecast(data, unit);
     renderWeeklyForecast(data, unit);
 
-    document.querySelector(".search-section").style.display = "none";
+    const searchSection = document.querySelector(".search-section");
+    if (searchSection) {
+      searchSection.style.display = "none";
+    }
 
     wireUpWeatherButtons();
   } catch (err) {
-    cityError.textContent = err.message;
+    if (cityError) {
+      cityError.textContent = err.message;
+    }
   }
 }
 
@@ -134,9 +168,14 @@ function wireUpWeatherButtons() {
   if (newSearchBtn) {
     newSearchBtn.addEventListener("click", () => {
       clearResults();
-      document.querySelector(".search-section").style.display = "block";
-      cityInput.value = "";
-      cityInput.focus();
+      const searchSection = document.querySelector(".search-section");
+      if (searchSection) {
+        searchSection.style.display = "block";
+      }
+      if (cityInput) {
+        cityInput.value = "";
+        cityInput.focus();
+      }
     });
   }
 
@@ -157,22 +196,26 @@ function getCurrentUnit() {
   return unitToggle.checked ? "metric" : "imperial";
 }
 
-unitToggle.checked = loadUnit() === "metric";
+if (unitToggle) {
+  unitToggle.checked = loadUnit() === "metric";
 
-unitToggle.addEventListener("change", () => {
-  saveUnit(getCurrentUnit());
+  unitToggle.addEventListener("change", () => {
+    saveUnit(getCurrentUnit());
 
-  const cardLink = document.querySelector(".weather-card .city-name .card-link");
-  if (cardLink) {
-    const city = new URL(cardLink.href).searchParams.get("city");
-    fetchAndDisplayWeather(city, getCurrentUnit());
-  }
-});
+    const cardLink = document.querySelector(".weather-card .city-name .card-link");
+    if (cardLink && cityInput) {
+      const city = new URL(cardLink.href).searchParams.get("city");
+      fetchAndDisplayWeather(city, getCurrentUnit());
+    }
+  });
+}
 
 /* --------------------------
    FAVORITES DROPDOWN
 -------------------------- */
 function refreshFavoritesDropdown() {
+  if (!favDropdownMenu) return; // Exit if element doesn't exist
+  
   const favorites = getFavorites();
   favDropdownMenu.innerHTML = "";
 
@@ -197,36 +240,42 @@ function refreshFavoritesDropdown() {
 refreshFavoritesDropdown();
 
 // Toggle open
-favDropdownBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  favDropdownMenu.classList.toggle("show");
-});
+if (favDropdownBtn) {
+  favDropdownBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    favDropdownMenu.classList.toggle("show");
+  });
+}
 
 // Inside menu click
-favDropdownMenu.addEventListener("click", (e) => {
-  const li = e.target.closest("li");
+if (favDropdownMenu) {
+  favDropdownMenu.addEventListener("click", (e) => {
+    const li = e.target.closest("li");
 
-  if (!li || li.classList.contains("empty-msg")) return;
+    if (!li || li.classList.contains("empty-msg")) return;
 
-  if (e.target.classList.contains("fav-delete-btn")) {
-    removeCityTile(li.dataset.city);
-    refreshFavoritesDropdown();
-    return;
-  }
+    if (e.target.classList.contains("fav-delete-btn")) {
+      removeCityTile(li.dataset.city);
+      refreshFavoritesDropdown();
+      return;
+    }
 
-  window.location.href = `index.html?city=${encodeURIComponent(li.dataset.city)}`;
-});
+    window.location.href = `index.html?city=${encodeURIComponent(li.dataset.city)}`;
+  });
+}
 
 // Close when clicking outside
 document.addEventListener("click", () => {
-  favDropdownMenu.classList.remove("show");
+  if (favDropdownMenu) {
+    favDropdownMenu.classList.remove("show");
+  }
 });
 
 /* --------------------------
    URL PARAM AUTO-LOAD
 -------------------------- */
 const params = new URLSearchParams(window.location.search);
-if (params.get("city")) {
+if (params.get("city") && cityInput) {
   cityInput.value = params.get("city");
   fetchAndDisplayWeather(cityInput.value, getCurrentUnit());
 }
